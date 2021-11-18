@@ -1,7 +1,5 @@
 #include "myBmpGris.h"
 
-// test
-
 // Constructeur et Destructeur
 /** Methode de creation d'une image Bmp "standard" (pas de LUT, pas d'alpha, codage sur 24 bits)
   * @param dimX nombre de lignes de l'image
@@ -131,7 +129,7 @@ BmpImg readBmpImage( char* imgName ) {
 	fclose( fImg );
 	return bmpImg;
 }
-// test example github
+
 /** Methode auxiliaire de lecture d'une image bitmap
   * Sert a lire le header (14 premiers octets) et le dib header
   * @param fImg le fichier image (deja ouvert)
