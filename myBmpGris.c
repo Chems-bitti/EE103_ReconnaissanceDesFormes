@@ -129,7 +129,7 @@ BmpImg readBmpImage( char* imgName ) {
 	fclose( fImg );
 	return bmpImg;
 }
-
+// test example github
 /** Methode auxiliaire de lecture d'une image bitmap
   * Sert a lire le header (14 premiers octets) et le dib header
   * @param fImg le fichier image (deja ouvert)
