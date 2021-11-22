@@ -8,9 +8,9 @@
 
 // déclaration de la structure Matrice
 typedef struct {
-    int numero;         // numéro de la matrice pour l'identidié
-    int DIMx, DIMy;     // dimention de la matrice en x et en y
-    double **tab;        // tableau avec les valeurs de la matrice
+    int numero;         // Numéro de la matrice pour l'identifier
+    int N;              // Ordre de la Matrice
+    double **tab        // Tableau avec les valeurs de la matrice
 } Matrice;
 
 
