@@ -1,3 +1,5 @@
+#include "calcul.h"
+
 double distance_euclidienne(double **a1, double **a2, int dimx, int dimy){
 
     int i,j;
