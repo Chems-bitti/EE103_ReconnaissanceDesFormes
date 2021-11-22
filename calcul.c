@@ -30,7 +30,7 @@ unsigned char reconstruction_pixel(int x, int y, Matrice mat){
 
     for(p = 0; p < N; p++){
         for (q = 0; q < N-p; q++){
-            somme1 += mat[p][q] * base_legendre(x,p) * base_legendre(y,q);
+            somme1 += mat.tab[p][q] * base_legendre(x,p) * base_legendre(y,q);
         }
         somme2 += somme1;
         somme1 = 0;
