@@ -10,7 +10,7 @@
 typedef struct {
     int numero;         // numéro de la matrice pour l'identidié
     int DIMx, DIMy;     // dimention de la matrice en x et en y
-    double **tab        // tableau avec les valeurs de la matrice
+    double **tab;        // tableau avec les valeurs de la matrice
 } Matrice;
 
 
