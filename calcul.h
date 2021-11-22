@@ -23,5 +23,7 @@ typedef struct {
   */
 double distance_euclidienne(Matrice mat1, Matrice mat2);
 
+double base_legendre(int x, int n);
+
 
 #endif
