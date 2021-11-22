@@ -5,7 +5,7 @@ double distance_euclidienne(Matrice mat1, Matrice mat2){
     int i,j;
     double res= 0;
     
-    if mat1.N != mat2.N{
+    if (mat1.N != mat2.N){
         printf("ERREUR : Les matrices ne sont pas de meme ordre\n");
         return 0;
     }else{
@@ -26,7 +26,7 @@ unsigned char reconstruction_pixel(int x, int y, Matrice mat){
     unsigned char somme2 = 0;
 
     for(p = 0; p < mat.N; p++){
-        for (q = 0; q < mat.N-p; q++){
+        for (q = 0; q < mat.N - p; q++){
             somme1 += mat.tab[p][q] * base_legendre(x,p) * base_legendre(y,q);
         }
         somme2 += somme1;
