@@ -1,37 +1,41 @@
 #include "momgeo.h"
 
-#define N 10
+#define N 5
 
 int main() {
-	Pix* root = malloc(sizeof(Pix));
-	root->x = 0; root->y = 0; root->next = NULL;
-	BmpImg test = readBmpImage("testpaint2.bmp");
+//	Pix* root = malloc(sizeof(Pix));
+//	root->x = 0; root->y = 0; root->next = NULL;
+	BmpImg test = readBmpImage("testpaint2.bmp"); // Lecture de l'image
 	//calint(&test, root);
-	long double** mat = mom(root,&test, 10);
-	truc("truc.txt",mat, 10, 10);
+	 double** mat = mom(&test, N); // Calcul des moment géométriques
+	truc("truc.txt",mat, N, N); // écriture des moments dans un fichier
 	//afficherliste(root);
-	writeBmpImage("test2.bmp", &test);
-	freeBmpImg(&test);
+	writeBmpImage("test2.bmp", &test); // écriture de l'image vers un autre ficheir 
+	freeBmpImg(&test); // désallocation de l'image
 	//freeListe(root);
-	//freemat(&mat, 10);
+	//freemat(&mat, 10); //fonction de désallocation de la matrice (marche pas)
 	return 0;
 }
 
-void freemat(long double*** mat, int dimY) {
-	for(int i = dimY; i > 0; i--) {
+
+void freemat( double*** mat, int dimY) {
+	for(int i = 0; i < dimY; i++) {
 		free((*mat)[i]);
 		(*mat)[i] = NULL;
 	}
 	free(*mat);
 	*mat = NULL;
 }
-long double** alloc(int x, int y) {
-	long double** mat = calloc(y, sizeof(int*));
+
+// Fonction de l'allocation de la matrice
+ 	double** alloc(int x, int y) {
+	double** mat = calloc(y, sizeof(int*));
 	for(int i = 0; i < x; i++) 
 		mat[i] = calloc(x, sizeof(int));
 	return mat;
 }
 
+// Fonction de désallocation de la liste chainée
 void freeListe(Pix* root) {
 	Pix* current = root, *temp = root->next;
 	while(temp->next != NULL) {
@@ -41,6 +45,8 @@ void freeListe(Pix* root) {
 	}
 	free(temp);
 }
+
+// Fonction de création d'une maille
 Pix* creermaille(Pix* root) {
 	Pix* maille = malloc(sizeof(Pix));
 	maille->x = 0;
@@ -53,6 +59,7 @@ Pix* creermaille(Pix* root) {
 	return maille;
 }
 
+// Fonction calcul région non nulle de l'image
 void calint(BmpImg* pic, Pix* root) {
 	Pix* current = root;
 	for(int i = 0; i < pic->dimX;i++) {
@@ -67,9 +74,10 @@ void calint(BmpImg* pic, Pix* root) {
 	}	
 }
 
-long double** mom( Pix* root, BmpImg* pic, int n) {
-	Pix* current = root;
-	long double** mat = alloc(n,n);
+
+// Fonction calcul des moments géométriques
+ double** mom(BmpImg* pic, int n) {
+	 double** mat = alloc(n,n);
 	for(int p = 0; p < n; p++) {
 		for(int q = p; q < n; q++) {
 			mat[p][q] = 0;
@@ -85,6 +93,7 @@ long double** mom( Pix* root, BmpImg* pic, int n) {
 	}
 }
 
+// Fonction de l'affichage d'une liste chainée
 void afficherliste(Pix* root){
 	Pix* current = root;
 	while(current->next != NULL){
@@ -95,7 +104,10 @@ void afficherliste(Pix* root){
 	printf("P: %p\tx:%d\ty:%d\n",current,current->x,current->y);
 	
 }
-void truc(char* fname, long double** mat, int dimX, int dimY){
+
+
+// Fonction écriture des moments géométriques dans un fichier text
+void truc(char* fname,  double** mat, int dimX, int dimY){
 	FILE* f = fopen(fname, "w");
 	if(f == NULL) {
 		printf("Erreur: Impossible d'ouvrir le fichier");
@@ -103,7 +115,7 @@ void truc(char* fname, long double** mat, int dimX, int dimY){
 	}
 	for(int i = 0; i < dimX; i++) {
 		for(int j = 0; j < dimY; j++) {
-				fprintf(f,"\t%.0Lf\t", mat[i][j]);
+				fprintf(f,"\t%.0f\t", mat[i][j]);
 		}
 		fprintf(f,"\n");
 	}

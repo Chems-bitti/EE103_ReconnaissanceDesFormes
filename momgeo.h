@@ -38,16 +38,16 @@
 
 	/* Fonction de création d'une matrice
 	 * @param int x: largeur de la matrice
-	 * @param int y : longueur de la matrice
+	 * @param int y : ueur de la matrice
 	 * @return pointeur vers le début de la matrice
 	 */
-	long double** alloc(int x, int y);
+	 double** alloc(int x, int y);
 
 	/* Fonction de destruction d'une matrice
 	 * @param double*** mat : pointeur vers le pointeur du début de la matrice
-	 * @param int dimY : longueur de la matrice
+	 * @param int dimY : ueur de la matrice
 	 */
-	void freemat(long double*** mat, int dimY);
+	void freemat( double*** mat, int dimY);
 	
 	/* Fonction de repérage des pixels non nuls de l'image binaire
 	 * @param BmpImg* pic : pointeur vers l'image
@@ -61,7 +61,7 @@
 	 * @param N : l'ordre choisit
 	 * @return Matrice de double
 	 */
-	long double** mom(Pix* root, BmpImg* pic, int N);
+	 double** mom(BmpImg* pic, int N);
 	
 	/* Fonction d'écriture des valeurs du moment dans un fichier
 	 * @param char* fnam : nom du fichier
@@ -69,7 +69,7 @@
 	 * @param int dimX : Largeur de la matrice
 	 * @param int dimY : Longueur de la matrice
 	 */
-	void truc(char* fname, long double** mat, int dimX, int dimY);
+	void truc(char* fname,  double** mat, int dimX, int dimY);
 
 
 
