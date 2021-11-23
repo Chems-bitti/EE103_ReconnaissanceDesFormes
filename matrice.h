@@ -13,7 +13,7 @@ typedef struct {
 } Matrice;
 
 /** Creer une matrice
-  * @param
+  * @param f"f"
   */
 Matrice creerMatrice();
 
