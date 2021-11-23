@@ -8,7 +8,7 @@
 
 // déclaration de la structure Matrice
 typedef struct {
-    int numero;         // Numéro de la matrice pour l'identifier
+    int num;         // Numéro de la matrice pour l'identifier
     int N;              // Ordre de la Matrice
     double **tab        // Tableau avec les valeurs de la matrice
 } Matrice;
