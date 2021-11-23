@@ -1,5 +1,28 @@
 #include "matrice.h"
 
+Matrice creerMatrice(num, N){
+
+    Matrice mat = {num, N};
+
+    double **tab = malloc(N*sizeof(double*));
+    int p;
+    for(p = 0 ; p < N; p++){
+        tab[p] = calloc(N - p, sizeof(double));
+    }
+    mat.tab = tab;
+    return mat;
+}
+
+void supprMatrice(Matrice *mat){
+
+    int p;
+    for(p = 0 ; p < mat->N; p++){
+        free(mat->tab[p]);
+    }
+    free(mat->tab)
+    mat->num = 0;
+    mat->N = 0;
+}
 
 void afficheMatrice(Matrice mat){
 
