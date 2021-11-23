@@ -5,14 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
-// déclaration de la structure Matrice
-typedef struct {
-    int num;         // Numéro de la matrice pour l'identifier
-    int N;              // Ordre de la Matrice
-    double **tab        // Tableau avec les valeurs de la matrice
-} Matrice;
-
+#include "myBmpGris.h"
+#include "listeSC.h"
+#include "matrice.h"
 
 /** Calcule la distance euclidienne entre deux matrice de moment
   * @param mat1 la premier matrice
