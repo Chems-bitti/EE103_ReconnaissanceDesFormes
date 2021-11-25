@@ -1,125 +1,106 @@
 #include "momgeo.h"
 
-#define N 5
+#define N 10
 
 int main() {
-//	Pix* root = malloc(sizeof(Pix));
-//	root->x = 0; root->y = 0; root->next = NULL;
-	BmpImg test = readBmpImage("testpaint2.bmp"); // Lecture de l'image
-	//calint(&test, root);
-	 double** mat = mom(&test, N); // Calcul des moment géométriques
-	truc("truc.txt",mat, N, N); // écriture des moments dans un fichier
-	//afficherliste(root);
-	writeBmpImage("test2.bmp", &test); // écriture de l'image vers un autre ficheir 
-	freeBmpImg(&test); // désallocation de l'image
-	//freeListe(root);
-	//freemat(&mat, 10); //fonction de désallocation de la matrice (marche pas)
+	// Lecture Image Binaire
+	
+	BmpImg test = readBmpImage("ImageBinaire.bmp");
+	
+	// Calcul des moments
+	// Stockage des résultats dans une variable mat
+	
+	long double** mat = mom(&test, N); 
+	
+	// Ecriture des moments dans un fichier text
+	
+	Ecriture_Moments("Moment_Geometriques_en_C.txt",mat, N, N);	
+	
+	// Ecriture de l'image lue dans un fichier BMP
+	
+	writeBmpImage("ImageBinaireEcrit.bmp", &test);	
+	
+	// Désallocation de l'image lue
+	
+	freeBmpImg(&test); 	
+	
+	// Désallocation de la matrice des moments
+	
+	freemat(&mat, N);	
+
 	return 0;
 }
 
+// Fonction désallocation d'une matrice
 
-void freemat( double*** mat, int dimY) {
-	for(int i = 0; i < dimY; i++) {
-		free((*mat)[i]);
-		(*mat)[i] = NULL;
+void freemat( long double*** pmat, int dimY) {
+	
+	/* On a besoin de déréférencer le pointeur pmat pour désallouer la matrice elle même
+	 * et non pas une copie locale de la matrice
+	 */
+	for(int i = 0; i < dimY; i++) {				// Boucle sur les lignes
+		free((*pmat)[i]);				// Désallocation de la ligne
+		(*pmat)[i] = NULL;				// Mise à NULL
 	}
-	free(*mat);
-	*mat = NULL;
+	free(*pmat);						// Désallocation de la matrice
+	*pmat = NULL;						// Mise à NULL;
 }
 
 // Fonction de l'allocation de la matrice
- 	double** alloc(int x, int y) {
-	double** mat = calloc(y, sizeof(int*));
-	for(int i = 0; i < x; i++) 
-		mat[i] = calloc(x, sizeof(int));
-	return mat;
-}
 
-// Fonction de désallocation de la liste chainée
-void freeListe(Pix* root) {
-	Pix* current = root, *temp = root->next;
-	while(temp->next != NULL) {
-		free(current);
-		current = temp;
-		temp = temp->next;
+long double** alloc(int x, int y) {
+	long double** mat = calloc(x, sizeof(long double)); 	// Allocation des lignes
+	for(int i = 0; i < x; i++){ 				// Boucle sur le nombre de lignes
+		mat[i] = calloc(y, sizeof(long double));	// Allocation des colonnes
 	}
-	free(temp);
+	return mat; 						// Return la matrice
 }
 
-// Fonction de création d'une maille
-Pix* creermaille(Pix* root) {
-	Pix* maille = malloc(sizeof(Pix));
-	maille->x = 0;
-	maille->y = 0;
-	maille->next = NULL;
-	Pix* current  = root;
-	while(current -> next != NULL) 
-		current = current -> next;
-	current -> next = maille;
-	return maille;
-}
-
-// Fonction calcul région non nulle de l'image
-void calint(BmpImg* pic, Pix* root) {
-	Pix* current = root;
-	for(int i = 0; i < pic->dimX;i++) {
-		for(int j = 0; j < pic->dimY; j++){
-			if(getPixel(*pic, i, j) > 0){
-				Pix* new = creermaille(root);
-				new->x = i;
-				new->y = j;
-				current = current -> next;
-			}
-		}
-	}	
-}
 
 
 // Fonction calcul des moments géométriques
- double** mom(BmpImg* pic, int n) {
-	 double** mat = alloc(n,n);
-	for(int p = 0; p < n; p++) {
-		for(int q = p; q < n; q++) {
-			mat[p][q] = 0;
+
+long double** mom(BmpImg* pic, int n) {
+	long double** mat = alloc(n,n);				// Allocation de la matrice
+	/* On calcule les moments pour tout p,q tel que p+q < N
+	 * Alors on aura N lignes
+	 * à chaque ligne i, le nombre de colonnes sera N - i
+	 * On obtiendra alors une matrice triangulaire inversé
+	 */
+	for(int p = 0; p < n; p++) {			
+		for(int q = 0; q < n-p; q++) {			
+			mat[p][q] = 0;				// Initialisation à 0, je fais pas confiance au calloc;
+			// Boucle sur les pixels de l'image
 			for(int x = 0; x < pic->dimX; x++){
 				for(int y = 0; y < pic->dimY; y++) {
-				mat[p][q] += pow(x,p)*pow(y,q)*getPixel(*pic, x,y);
+					if(getPixel(*pic, x,y) != 0)	// Vérification que le pixel est non nul
+						mat[p][q] += pow(x,p)*pow(y,q);	// somme
 				}
+				
 
 			}
+				printf("M[%d][%d] = %LF\n", p, q, mat[p][q]); // Affichage du terme (juste pour vérifier avec le fichier écrit) 
 		}	
-
+		
+	}
 	return mat;
-	}
-}
-
-// Fonction de l'affichage d'une liste chainée
-void afficherliste(Pix* root){
-	Pix* current = root;
-	while(current->next != NULL){
-		printf("P: %p\tx:%d\ty:%d\n",current,current->x,current->y);
-		current = current -> next;
-	}
-	
-	printf("P: %p\tx:%d\ty:%d\n",current,current->x,current->y);
-	
 }
 
 
 // Fonction écriture des moments géométriques dans un fichier text
-void truc(char* fname,  double** mat, int dimX, int dimY){
-	FILE* f = fopen(fname, "w");
-	if(f == NULL) {
+void Ecriture_Moments(char* fname,  long double** mat, int dimX, int dimY){
+	FILE* f = fopen(fname, "w");				// Ouverture du fichier
+	if(f == NULL) {						// Vérification que le fichier à été ouvert correctement
 		printf("Erreur: Impossible d'ouvrir le fichier");
 		exit(1);
 	}
+
 	for(int i = 0; i < dimX; i++) {
-		for(int j = 0; j < dimY; j++) {
-				fprintf(f,"\t%.0f\t", mat[i][j]);
+		for(int j = 0; j < dimY-i; j++) {			
+				fprintf(f,"\t%LF", mat[i][j]);	// Ecriture du terme
 		}
-		fprintf(f,"\n");
+		fprintf(f,"\n");				// Retour à la ligne
 	}
 	fclose(f);
 }
-
 
