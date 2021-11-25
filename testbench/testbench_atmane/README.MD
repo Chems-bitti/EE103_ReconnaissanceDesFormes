@@ -1,7 +1,7 @@
-Fonction moments centrés et normés.(A tester)
+##Fonction moments centrés et normés.(A tester)
 
 
-long double **(BmpImg* pic, int n){
+    long double **(BmpImg* pic, int n){
 
     long double** eta = alloc(n,n);	 //allocation de la matrice moment centrés et normés
     long double **res= mom(*pic,n);   //recuperation des moments de l'image
@@ -25,6 +25,6 @@ long double **(BmpImg* pic, int n){
     }
     }
         return eta;
-}
+    }
 
 
