@@ -1,9 +1,6 @@
 Fonction moments centrés et normés.(A tester)
 
 
-
-
-
 long double **(BmpImg* pic, int n){
 
     long double** eta = alloc(n,n);	 //allocation de la matrice moment centrés et normés
