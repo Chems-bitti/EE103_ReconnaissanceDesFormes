@@ -29,7 +29,7 @@ void reconstruction_image(Matrice mat, BmpImg* pic)
  
  
 /* Faire une fonction compare_image
-   qui compare, grace a la fonction distance_euclidienne, une matrice de momen de l'image avec celles des images de la base donne */
+   qui compare, grace a la fonction distance_euclidienne, une matrice de moment de l'image avec celles des images de la base de donnee */
 
 
 
