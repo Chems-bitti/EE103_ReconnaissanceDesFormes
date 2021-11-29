@@ -21,7 +21,7 @@ unsigned char reconstruction_pixel(int x, int y, Matrice mat);
 /* Faire une fonction reconstruction_image
    qui reconstruit une image pixel par pixel grace a la fonction reconstruction_pixel */
 
-/* Faire un fonction de comapare_image
+/* Faire une fonction compare_image
    qui compare, grace a la fonction distance_euclidienne, une matrice de momen de l'image avec celles des images de la base donne */
 
 
