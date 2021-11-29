@@ -17,7 +17,7 @@ void supprMatrice(Matrice *mat){
 
     if (mat->tab != NULL){
         int p;
-        for(p = 0 ; p < mat->N; p++){
+        for(p = 0 ; p <= mat->N; p++){
             free(mat->tab[p]);
         }
         free(mat->tab);
@@ -32,7 +32,7 @@ void afficheMatrice(Matrice mat){
     if (mat.tab == NULL){
         printf("Erreur : le tableau de la matrice %d ne pointe vers rien !\n", mat.num);
     }else{
-        printf("Matrice numero\t: %d\n\tordre\t: %d\n", mat.num, mat.N);
+        printf("Matrice numero\t: %d\n\t\ordre\t: %d\n", mat.num, mat.N);
         printf("\t----\t-----\t----\n");
         int p,q;
         for(p = 0 ; p <= mat.N; p++){
