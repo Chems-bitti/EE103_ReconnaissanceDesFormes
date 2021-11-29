@@ -9,7 +9,16 @@
 	#include "listeSC.h"
 	#include "matrice.h"
 
-	// Pas teste !!
+
+	// Pas testé !!
+	/** Calcule la distance euclidienne entre deux matrice de moment
+  	* @param mat1 la premier matrice
+  	* @param mat2 la deuxieme matrice
+  	* @return La distance euclidienne des deux matrices
+  	*/
+	double distance_euclidienne(Matrice mat1, Matrice mat2);
+
+	// Pas testé !!
 	/** Calcul la base de Legendre
 	  * @param x la valeur souhaité
 	  * @param n l'ordre de la base
