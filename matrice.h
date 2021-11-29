@@ -19,7 +19,6 @@ typedef struct {
   */
 Matrice creerMatrice(num, N);
 
-// Pas fini !!
 /** Suppression d'une matrice
   * @param *mat adresse de la matrice a supprimer
   */
