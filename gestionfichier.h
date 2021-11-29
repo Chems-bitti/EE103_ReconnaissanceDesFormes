@@ -26,7 +26,7 @@ int ecritureMatrice(char * nomfichier, Matrice mat, int TypeEcriture);
   */
 Matrice lectureMatrice(char * nomfichier, int num);
 
-// Pas creer !!
+// Pas fini !!
 /** Ecrit une matrice dans un fichier binaire
   * Les deux premiers entier sont pour le numéro et l'ordre de la matrice, le tableau en deux dimension pour les valeurs
   * @param nomfichierbin Le nom du fichier dans lequel ecrire la matrice
