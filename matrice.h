@@ -17,7 +17,7 @@ typedef struct {
   * @param N ordre de la matrice
   * @return matrice
   */
-Matrice creerMatrice(num, N);
+Matrice creerMatrice(int num, int N);
 
 /** Suppression d'une matrice
   * @param *mat adresse de la matrice a supprimer
