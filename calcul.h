@@ -40,6 +40,13 @@
 	 */
 	Matrice mom(BmpImg* pic, int n);
 
+	/* Calcul des moments de Legendre
+	 * @param BmpImg* pic : Pointeur vers l'image BMP
+	 * @param int n : ordre des moments 
+	 * @return double** mat : matrice des moments de Legendre
+	 */
+	Matrice mom_legendre(BmpImg* pic, int n);
+
 
 
 
