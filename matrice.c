@@ -1,6 +1,6 @@
 #include "matrice.h"
 
-Matrice creerMatrice(num, N){
+Matrice creerMatrice(int num, int N){
 
     Matrice mat = {num, N};
 
