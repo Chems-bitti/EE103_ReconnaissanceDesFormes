@@ -18,25 +18,6 @@ double distance_euclidienne(Matrice mat1, Matrice mat2){
     return sqrt(res);
 }
 
-
-unsigned char reconstruction_pixel(int x, int y, Matrice mat){
-
-    int p,q;
-    unsigned char somme1 = 0 ;
-    unsigned char somme2 = 0;
-
-    for(p = 0; p < mat.N; p++){
-        for (q = 0; q < mat.N - p; q++){
-            somme1 += mat.tab[p][q] * base_legendre(x,p) * base_legendre(y,q);
-        }
-        somme2 += somme1;
-        somme1 = 0;
-    }
-    return somme2;
-}
-
-
-
 /*double distance_euclidienne(double **a1, double **a2, int dimx, int dimy){
 
     int i,j;
