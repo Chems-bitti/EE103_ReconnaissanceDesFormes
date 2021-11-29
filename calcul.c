@@ -23,24 +23,11 @@ double base_legendre(int x, int n){
         }
     }
 
-    for(int i=0;i<=n;i++){ //recherche du problème
-        for(int j=0; j<=i; j++){
-            printf("%f ",an.tab[i][j]);
-        }
-        printf("\n");
-    }
-
     for(int i=0; i<=n; i++){
         res+=an.tab[n][i]*pow(x,i);
     }
 
     supprMatrice(&an);
 
-    for(int i=0;i<=n;i++){ //recherche du problème
-        for(int j=0; j<=i; j++){
-            printf("%f ",an.tab[i][j]);
-        }
-        printf("\n");
-    }
     return res;
 }
