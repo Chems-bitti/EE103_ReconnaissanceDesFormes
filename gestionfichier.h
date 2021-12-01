@@ -9,40 +9,37 @@
 // Pas creer !!
 /** Ecrit une matrice dans un fichier texte
   * 1ere ligne : numero de matrice - tab - ordre de la matrice
-  * ligne suivant : valeur de la matrice place en triangulaire inférieure pour ne pas avoir a marquer les 0
-                    chaque valeur est séparé par une tabulation
+  * ligne suivant : valeur de la matrice place en triangulaire infï¿½rieure pour ne pas avoir a marquer les 0
+                    chaque valeur est sï¿½parï¿½ par une tabulation
   * @param nomfichier Le nom du fichier dans lequel ecrire la matrice
   * @param mat La matrice qui sera ecrite
-  * @param TypeEcriture Type d'ecriture dans le fichier (0: remplace, 1: ajoute)
   * @return 1 si le fichier s'est bien ouvert, sinon 0
   */
-int ecritureMatrice(char * nomfichier, Matrice mat, int TypeEcriture);
+int ecritureMatrice(char * nomfichier, Matrice mat);
 
 // Pas creer !!
 /** Recupere une matrice dans un fichier texte
   * @param nomfichier Le nom du fichier dans lequel lire la matrice
-  * @param num numero de la matrice
   * @return la matrice
   */
-Matrice lectureMatrice(char * nomfichier, int num);
+Matrice lectureMatrice(char * nomfichier);
 
-// Pas fini !!
+// marche mais a revoir pour le nombre de donnee du freads
 /** Ecrit une matrice dans un fichier binaire
-  * Les deux premiers entier sont pour le numéro et l'ordre de la matrice, le tableau en deux dimension pour les valeurs
+  * Les deux premiers entier sont pour le numï¿½ro et l'ordre de la matrice, le tableau en deux dimension pour les valeurs
   * @param nomfichierbin Le nom du fichier dans lequel ecrire la matrice
   * @param mat La matrice qui sera ecrite
-  * @param TypeEcriture Type d'ecriture dans le fichier (0: remplace, 1: ajoute)
   * @return 1 si le fichier s'est bien ouvert, sinon 0
   */
-int ecritureMatricebin(char * nomfichierbin, Matrice mat, int TypeEcriture);
+int ecritureMatricebin(char * nomfichierbin, Matrice mat);
 
-// Pas creer !!
+// marche mais a revoir pour le nombre de donnee du fread
 /** Recupere une matrice dans un fichier binaire
   * @param nomfichier Le nom du fichier dans lequel lire la matrice
   * @param num numero de la matrice
   * @return la matrice
   */
-Matrice lectureMatricebin(char * nomfichierbin, int num);
+Matrice lectureMatricebin(char * nomfichierbin);
 
 
 
