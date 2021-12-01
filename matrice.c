@@ -6,7 +6,7 @@ Matrice creerMatrice(int num, int N){
 
     double **tab = malloc(N*sizeof(double*));
     int p;
-    for(p = 0 ; p <= N; p++){
+    for(p = 0 ; p < N; p++){
         tab[p] = calloc(N, sizeof(double));
     }
     mat.tab = tab;
@@ -17,7 +17,7 @@ void supprMatrice(Matrice *mat){
 
     if (mat->tab != NULL){
         int p;
-        for(p = 0 ; p <= mat->N; p++){
+        for(p = 0 ; p < mat->N; p++){
             free(mat->tab[p]);
         }
         free(mat->tab);
