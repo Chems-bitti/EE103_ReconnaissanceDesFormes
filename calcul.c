@@ -62,8 +62,8 @@ Matrice momcentre(BmpImg* pic, int n) {
 	double y1 = mat.tab[0][1]/omega;	// y moyen
 
 	// Boucle sur p et q tq p+q < N
-	for(int p = 0; p < n; p++) {
-		for(int q = 0; q < n-p; q++) {
+	for(int p = 0; p <= n; p++) {
+		for(int q = 0; q <= n-p; q++) {
 			eta.tab[p][q]=0;
 			for(int x = 0; x < pic->dimX; x++){
 				for(int y = 0; y < pic->dimY; y++) {
@@ -98,8 +98,8 @@ Matrice mom(BmpImg* pic, int n) {
 	 * à chaque ligne i, le nombre de colonnes sera N - i
 	 * On obtiendra alors une matrice triangulaire inversé
 	 */
-	for(int p = 0; p < n; p++) {			
-		for(int q = 0; q < n-p; q++) {			
+	for(int p = 0; p <= n; p++) {			
+		for(int q = 0; q <= n-p; q++) {			
 			mat.tab[p][q] = 0;				// Initialisation à 0, je fais pas confiance au calloc;
 			// Boucle sur les pixels de l'image
 			for(int x = 0; x < pic->dimX; x++){
