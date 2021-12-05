@@ -24,7 +24,7 @@ unsigned char reconstruction_pixel(int x, int y, Matrice mat);
   * @param *pic image que l'on va reconstruire
   * @param mat Matrice de moment de Legendre
   */
-void reconstruction_image(Matrice mat, BmpImg* pic)
+void reconstruction_image(Matrice mat, BmpImg* pic);
 
  
  
