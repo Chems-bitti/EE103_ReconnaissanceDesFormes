@@ -8,16 +8,9 @@
 #include "calcul.h"
 #include "gestionfichier.h"
 
-// Pas teste !!
-/** Calcule la distance euclidienne entre deux matrice de moment
-  * @param mat1 la premier matrice
-  * @param mat2 la deuxieme matrice
-  * @return La distance euclidienne des deux matrices
-  */
-double distance_euclidienne(Matrice mat1, Matrice mat2);
 
-// Pas teste !!
-/** Reconstruit un pixel de coordonnee (x,y) à partir du Matrice de moment de Legendre
+// Pas testé !!
+/** Reconstruit un pixel de coordonnee (x,y) à partir d'une Matrice de moment de Legendre
   * @param x coordonnee en abscisse
   * @param y coordonnee en ordonnee
   * @param mat Matrice de moment de Legendre
@@ -25,11 +18,17 @@ double distance_euclidienne(Matrice mat1, Matrice mat2);
   */
 unsigned char reconstruction_pixel(int x, int y, Matrice mat);
 
-/* Faire une fonction reconstruction_image
-   qui reconstruit une image pixel par pixel grace a la fonction reconstruction_pixel */
+// Pas testé !!
+/** Reconstruit une image de coordonnee (x,y) à partir d'une Matrice de moment de Legendre et d'une image bmp
+  * @param mat Matrice de moment de Legendre
+  * @param *pic image que l'on va reconstruire
+  */
+void reconstruction_image(Matrice mat, BmpImg* pic);
 
-/* Faire un fonction de comapare_image
-   qui compare, grace a la fonction distance_euclidienne, une matrice de momen de l'image avec celles des images de la base donne */
+
+
+/* Faire une fonction compare_image
+   qui compare, grace a la fonction distance_euclidienne, une matrice de moment de l'image avec celles des images de la base de donnee */
 
 
 
