@@ -1,6 +1,5 @@
 #include "gestionfichier.h"
 
-
 int ecritureMatricebin(char *nomfichierbin, Matrice mat){
 
     FILE *fbin = fopen(nomfichierbin, "wb");
@@ -11,9 +10,13 @@ int ecritureMatricebin(char *nomfichierbin, Matrice mat){
         return 0;
     }else{
 
-        fwrite ( &mat.num , sizeof (int) , 1 , fbin );                  // Ecrit le numero de la matrice
-        fwrite ( &mat.N , sizeof (int) , 1 , fbin );                    // Ecrit l'ordre de la matrice
-        fwrite ( &mat.tab[0] , sizeof (double) , (mat.N+1)*(mat.N+1) , fbin );    // Ecrit la matrice
+        fwrite ( &mat.num , sizeof (int) , 1 , fbin );                              // Ecrit le numero de la matrice
+        fwrite ( &mat.N , sizeof (int) , 1 , fbin );                                // Ecrit l'ordre de la matrice
+
+        int q;
+        for (q = 0; q <=mat.N; q++){
+            fwrite ( &mat.tab[q] , sizeof (double) , mat.N+1 , fbin );      // Ecrit la matrice ligne par ligne
+        }
 
         // Fermeture du fichier
         fclose(fbin);
@@ -35,11 +38,12 @@ Matrice lectureMatricebin(char *nomfichierbin){
         fread ( &num , sizeof (int) , 1 , fbin );                  // Ecrit le numero de la matrice
         fread ( &N , sizeof (int) , 1 , fbin );                    // Ecrit l'ordre de la matrice
 
-        printf("le num %d, le N %d\n", num, N);
-
         Matrice mat = creerMatrice(num,N);
 
-        fread ( &mat.tab[0] , sizeof (double) , (mat.N+1)*(mat.N+1) , fbin );    // Ecrit la matrice
+        int q;
+        for (q = 0; q <=mat.N; q++){
+            fread ( &mat.tab[q] , sizeof (double) , mat.N+1 , fbin );    // Lit la matrice ligne par ligne
+        }
 
         // Fermeture du fichier
         fclose(fbin);

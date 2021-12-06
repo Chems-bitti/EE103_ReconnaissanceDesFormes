@@ -9,7 +9,7 @@
 // Pas creer !!
 /** Ecrit une matrice dans un fichier texte
   * 1ere ligne : numero de matrice - tab - ordre de la matrice
-  * ligne suivant : valeur de la matrice place en triangulaire inferieure pour ne pas avoir a marquer les 0
+  * ligne suivant : valeur de la matrice place en triangulaire inf�rieure pour ne pas avoir a marquer les 0
                     chaque valeur est separe par une tabulation
   * @param nomfichier Le nom du fichier dans lequel ecrire la matrice
   * @param mat La matrice qui sera ecrite
@@ -24,7 +24,7 @@ int ecritureMatrice(char * nomfichier, Matrice mat);
   */
 Matrice lectureMatrice(char * nomfichier);
 
-// marche mais a revoir pour le nombre de donnee du freads
+// marche pas completement
 /** Ecrit une matrice dans un fichier binaire
   * Les deux premiers entier sont pour le numero et l'ordre de la matrice, le tableau en deux dimension pour les valeurs
   * @param nomfichierbin Le nom du fichier dans lequel ecrire la matrice
@@ -33,7 +33,7 @@ Matrice lectureMatrice(char * nomfichier);
   */
 int ecritureMatricebin(char * nomfichierbin, Matrice mat);
 
-// marche mais a revoir pour le nombre de donnee du fread
+// marche pas completement
 /** Recupere une matrice dans un fichier binaire
   * @param nomfichier Le nom du fichier dans lequel lire la matrice
   * @param num numero de la matrice
