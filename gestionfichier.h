@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include "matrice.h"
 
-// Pas creer !!
 /** Ecrit une matrice dans un fichier texte
   * 1ere ligne : numero de matrice - tab - ordre de la matrice
   * ligne suivant : valeur de la matrice place en triangulaire inf�rieure pour ne pas avoir a marquer les 0
