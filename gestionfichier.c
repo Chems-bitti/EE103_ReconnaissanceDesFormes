@@ -1,5 +1,23 @@
 #include "gestionfichier.h"
 
+int ecritureMatrice(char * nomfichier, Matrice* mat){
+	
+	FILE* f = fopen(fname, "w");				// Ouverture du fichier
+	if(f == NULL) {						// Vérification que le fichier à été ouvert correctement
+		printf("Erreur: Impossible d'ouvrir le fichier");
+		exit(1);
+	}
+
+	for(int i = 0; i < mat->N; i++) {
+		for(int j = 0; j < mat->N-i; j++) {			
+				fprintf(f,"%le\t", mat->tab[i][j]);	// Ecriture du terme
+		}
+		fprintf(f,"\n");				// Retour à la ligne
+	}
+	fclose(f);
+	
+}
+
 int ecritureMatricebin(char *nomfichierbin, Matrice mat){
 
     FILE *fbin = fopen(nomfichierbin, "wb");
