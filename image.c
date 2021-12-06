@@ -19,11 +19,10 @@ unsigned char reconstruction_pixel(int x, int y, Matrice mat){
 
 void reconstruction_image(Matrice mat, BmpImg* pic){
 
-
-for (int x = 0; x < pic->dimX ; x++){
-    for (int y = 0 ; y < pic->dimY ; y++){
-        pic->img[x][y]=reconstruction_pixel(x,y,mat);
+    for (int x = 0; x < pic->dimX ; x++){
+        for (int y = 0 ; y < pic->dimY ; y++){
+            pic->img[x][y]=reconstruction_pixel(x,y,mat);
+        }
     }
-}
 }
 
