@@ -1,8 +1,10 @@
 
+
 #include "test.h"
 #include "image.h"
 #include "matrice.h"
 #include "gestionfichier.h"
+#include "base2donnee.h"
 
 #define fichierbin "donnees/fichierbin.bin"
 #define basedonne "donnees/"
@@ -23,13 +25,13 @@ int main(){
         }
     }//*/
 
-    //*
+    /*
     mat1.tab[0][2] = 10;
     mat1.tab[2][2] = 7;
     mat1.tab[2][0] = 1563;
     mat1.tab[N][N] = -1000.000001;//*/
 
-
+    /*
     printf("--Partie 1.1\n");
     afficheMatrice(mat1);
     printf("--Partie 1.2\n");
@@ -43,7 +45,12 @@ int main(){
     afficheMatrice(mat2);
     printf("--Partie 2.3\n");
     supprMatrice(&mat2);
+    //*/
 
+    if ("ac" > "ab"){
+        printf("oui\n");
+    }
+    printf("bla : %d\n",strcmp("a","b"));
 
 
     printf("fin\n");

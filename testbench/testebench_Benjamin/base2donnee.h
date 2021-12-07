@@ -4,8 +4,13 @@
 // Bibliotheques
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 #include "image.h"
 #include "listeSC.h"
+
+#define taillenom       15
+#define tailledescri    60
 
 // déclaration de la structure MatriceBD
 typedef struct {
@@ -19,16 +24,18 @@ typedef struct {
 typedef struct {
     char* nom;              // Nom de l'image dans le dossier de la base de donnee
     char* description;      // Description dans le cas ou le nom n'est pas explicite
-    ListeSC listematrice;  // Liste chaine des matrices de l'image dans la base de donnee
+    int nbmatrice;          // Nombre de matrice de l'image
+    ListeSC* listematrice;  // Liste chaine des matrices de l'image dans la base de donnee
 } ImageBD;
 
-// déclaration de la structure Base2donnee
+// déclaration de la structure BD
 typedef struct {
-    char* nom;              // Nom de la base de donnee dans le dossier de la base de donnee
+    char* nom;              // Nom de la base de donnee
     char* description;      // Description dans le cas ou le nom n'est pas explicite
-
-    ListeSC listeimage;  // Liste chaine des image dans la base de donnee
-} Base2donnee;
+    int nbimage;            // Nombre d'image dans la base de donnee
+    int nbmatrice;          // Nombre de matrice dans la base de donnee
+    ListeSC* listeimage;    // Liste chaine des image dans la base de donnee
+} BaseDonnee;
 
 
 
@@ -48,20 +55,26 @@ typedef struct {
   */
 int ajoutBD(ListeSC listeimage, char* nom, char* description, int num, int* N, int typefichier);
 
-creerBD
+
+BaseDonnee* creerBD(char* nom, char* description);
+ImageBD* creerImageBD(char* nom, char* description);
+MatriceBD* creerMatriceBD(char* nom, int type, int num, int N);
+
+void ajoutImageBD(BaseDonnee* bd, ImageBD* imgbd);
+void ajoutMatriceBD(BaseDonnee* bd, ImageBD* imgbd, MatriceBD* matbd);
+
+void suprimeBD(BaseDonnee* bd);
+void suprimeImageBD(ImageBD* imgbd);
+void suprimeMatriceBD(MatriceBD* matbd);
+
+/*
 afficheBD
-suprimeBD
 
-creerImageBD
 afficheImageBD
-ajoutImageBD
-suprimeImageBD
 
-creerMatriceBD
 afficheMatriceBD
-ajoutMatriceBD
-suprimeMatriceBD
 
+*/
 
 
 
