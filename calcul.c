@@ -20,7 +20,7 @@ double distance_euclidienne(Matrice mat1, Matrice mat2){
 }
 
 
-double base_legendre(int x, int n, Matrice coef){
+double base_legendre(double x, int n, Matrice coef){
     double res=0;
     x = (double) x;
     for(int i=0; i<=n; i++){
