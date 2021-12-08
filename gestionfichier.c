@@ -1,6 +1,6 @@
 #include "gestionfichier.h"
 
-int ecritureMatrice(char * nomfichier, Matrice* mat){
+int ecritureMatrice(char * fname, Matrice mat){
 	
 	FILE* f = fopen(fname, "w");				// Ouverture du fichier
 	if(f == NULL) {						// Vérification que le fichier à été ouvert correctement
