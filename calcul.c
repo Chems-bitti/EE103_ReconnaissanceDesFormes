@@ -47,6 +47,26 @@ Matrice coefLegendre(int n) {
     return an;
 }
 
+Matrice mom_legendre(BmpImg* pic, int n) {
+	Matrice lambda = creerMatrice(1,n);
+	Matrice eta = momcentre(pic, n);
+	double Cpq = 0;
+	Matrice coef = coefLegendre(n);
+	for(int p = 0; p <= n; p++) {
+		for(int q = 0; q <= n-p; q++){
+			lambda.tab[p][q] = 0;
+			Cpq = (2*p+1)*(2*q+1)/4.;
+			for(int i = 0; i <= p; i++) {
+				for(int j = 0; j <= q; j++) {
+					lambda.tab[p][q] += Cpq*coef.tab[p][i]*coef.tab[q][j]*eta.tab[i][j];
+				}
+			}
+		}
+	}
+	supprMatrice(&coef);
+	supprMatrice(&eta);
+	return lambda;
+}
 Matrice momcentre(BmpImg* pic, int n) {
 	
 	Matrice eta = creerMatrice(1,n); 	// allocation de la matrice
