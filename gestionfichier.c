@@ -8,9 +8,9 @@ int ecritureMatrice(char * fname, Matrice mat){
 		exit(1);
 	}
 
-	for(int i = 0; i < mat->N; i++) {
-		for(int j = 0; j < mat->N-i; j++) {			
-				fprintf(f,"%le\t", mat->tab[i][j]);	// Ecriture du terme
+	for(int i = 0; i < mat.N; i++) {
+		for(int j = 0; j < mat.N-i; j++) {			
+				fprintf(f,"%le\t", mat.tab[i][j]);	// Ecriture du terme
 		}
 		fprintf(f,"\n");				// Retour à la ligne
 	}
