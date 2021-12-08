@@ -3,7 +3,7 @@
 unsigned char reconstruction_pixel(int x, int y, Matrice mat, Matrice coef, int dimX, int dimY){
 
     int p,q;
-    unsigned char somme1 = 0 ;
+    double somme = 0 ;
     /* il faut que nos variable x et y varient entre -1 et 1
      * Alors on utilise xn et yn ci-dessous
      */
@@ -12,14 +12,14 @@ unsigned char reconstruction_pixel(int x, int y, Matrice mat, Matrice coef, int 
 
     for(p = 0; p < mat.N; p++){
         for (q = 0; q < mat.N - p; q++){
-            somme1 += mat.tab[p][q] * base_legendre(xn,p, coef) * base_legendre(yn,q, coef);
+            somme += mat.tab[p][q] * base_legendre(xn,p, coef) * base_legendre(yn,q, coef);
         }
 
     }
-    if(somme2>1) somme2 = 1; // pour ne pas overflow?
-    if(somme2 < 0) somme2 = 0; // pour ne pas underflow?
+    if(somme>1) somme = 1; // pour ne pas overflow?
+    if(somme < 0) somme = 0; // pour ne pas underflow?
     // de toute façon on veut pas dépasser 255 et on ne veut pas être négatif
-    return (unsigned char) (somme2*255);
+    return (unsigned char) (somme*255);
 
 }
 
