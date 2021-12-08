@@ -19,11 +19,11 @@
 	double distance_euclidienne(Matrice mat1, Matrice mat2);
 
 	/** Calcul la base de Legendre
-	  * @param x la valeur souhaité
+	  * @param x la variable en base de legendre
 	  * @param n l'ordre de la base
 	  * @return La valeur de x dans la base de Legendre d'ordre n
 	  */
-	double base_legendre(int x, int n, Matrice coef);
+	double base_legendre(double x, int n, Matrice coef);
 
 	/* Calcul coefLegendre
 	 * @param int n : ordre du polynome
