@@ -38,10 +38,10 @@ Matrice coefLegendre(int n) {
     	}
 	for(int i=2; i<=n; i++){    //Détermination de tous les an jusqu'à l'ordre souhaité
         	for(int j=0; j<=i-2; j++){ // on veut pas que j==i
-                	an.tab[i][j]= /*(double)*/ (-i+1)*(an.tab[i-2][j])/ /*(double)*/ i;
+                	an.tab[i][j]= (-i+1)*(an.tab[i-2][j])/ i;
                 }
 		for(int j = 0; j <= i; j++) { // rebouclage pour avoir les bons termes
-			an.tab[i][j] += /*(double)*/ (2*i-1)*an.tab[i-1][j-1]/ /*(double)*/ i;
+			an.tab[i][j] += (2*i-1)*an.tab[i-1][j-1]/ i;
 		}
     	}
     return an;
