@@ -16,7 +16,7 @@
   */
 int ecritureMatrice(char* fname, Matrice mat);
 
-// Pas creer !!
+// Pas testé !!
 /** Recupere une matrice dans un fichier texte
   * @param nomfichier Le nom du fichier dans lequel lire la matrice
   * @return la matrice
