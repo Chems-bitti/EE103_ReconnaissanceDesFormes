@@ -26,7 +26,7 @@ Matrice lectureMatrice(char * nomfichier){
 		exit(1);
 	}
 
-	fscanf ( f , "%d", & dim );
+	fscanf ( f , "%d\n", & dim );
 	Matrice mat= creerMatrice(dim);
 	for(int i=0; i<dim; i++){
         for(int j=0;j<dim-i; j++){
