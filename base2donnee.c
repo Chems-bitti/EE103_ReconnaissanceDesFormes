@@ -1,24 +1,21 @@
-#include "base2donnee.h"
-
 // Fonction de base pour la manipulation des elements de la gestion de donnee
-BaseDonnee* creerBD(char* nom, char* description){
+BaseDonnee* creerBD(char* nom){
 
     BaseDonnee* bd = malloc(sizeof(bd));
     bd->nom = nom;
-    bd->description = description;
     bd->nbimage = 0;
     bd->listeimage = creerListe(sizeof(ImageBD));
     return bd;
 }
 
-ImageBD* creerImageBD(char* nomfimage, char* nomfmatrice, char* description){
+ImageBD* creerImageBD(char* nomfimage, char* nomfmatrice){
 
     ImageBD* imgbd = malloc(sizeof(ImageBD));
     imgbd->nomfimage = nomfimage;
     imgbd->nomfmatrice = nomfmatrice;
-    imgbd->description = description;
     return imgbd;
 }
+
 
 void ajoutImageBD(BaseDonnee* bd, ImageBD* imgbd){
 
@@ -38,10 +35,10 @@ void ajoutImageBD(BaseDonnee* bd, ImageBD* imgbd){
     bd->nbimage ++;
 }
 
+
 void suprimeBD(BaseDonnee* bd){
 
     bd->nom = '\0';
-    bd->description = '\0';
     bd->nbimage = 0;
 
     // Tant que la liste n'est pas vide
@@ -59,11 +56,7 @@ void suprimeImageBD(ImageBD* imgbd){
 
     imgbd->nomfimage = '\0';
     imgbd->nomfmatrice = '\0';
-    imgbd->description = '\0';
 }
-
-
-
 
 
 
