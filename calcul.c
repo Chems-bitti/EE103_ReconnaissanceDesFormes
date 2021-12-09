@@ -30,7 +30,7 @@ double base_legendre(double x, int n, Matrice coef){
 }
 
 Matrice coefLegendre(int n) {
-	Matrice an = creerMatrice(0, n);
+	Matrice an = creerMatrice(n);
 	an.tab[0][0] = 1;
 	if(n>0){
         	an.tab[1][0]=0;
@@ -48,7 +48,7 @@ Matrice coefLegendre(int n) {
 }
 
 Matrice mom_legendre(BmpImg* pic, int n) {
-	Matrice lambda = creerMatrice(1,n);
+	Matrice lambda = creerMatrice(n);
 	Matrice eta = momcentre(pic, n);
 	double Cpq = 0;
 	Matrice coef = coefLegendre(n);
@@ -69,7 +69,7 @@ Matrice mom_legendre(BmpImg* pic, int n) {
 }
 Matrice momcentre(BmpImg* pic, int n) {
 	
-	Matrice eta = creerMatrice(1,n); 	// allocation de la matrice
+	Matrice eta = creerMatrice(n); 	// allocation de la matrice
 	Matrice mat = mom(pic, n);		// calcul des moments géometrique
 	
 	double omega = mat.tab[0][0]; 		// Nombre de pixels non nuls
@@ -107,7 +107,7 @@ Matrice momcentre(BmpImg* pic, int n) {
 
 
 Matrice mom(BmpImg* pic, int n) {
-	Matrice mat = creerMatrice(1,n);
+	Matrice mat = creerMatrice(n);
 	/* On calcule les moments pour tout p,q tel que p+q < N
 	 * Alors on aura N lignes
 	 * à chaque ligne i, le nombre de colonnes sera N - i
