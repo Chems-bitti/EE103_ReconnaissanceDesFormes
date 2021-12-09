@@ -30,10 +30,11 @@ Matrice lectureMatrice(char * nomfichier){
 	Matrice mat= creerMatrice(dim);
 	for(int i=0; i<dim; i++){
         for(int j=0;j<dim-i; j++){
-            fscanf(f,"%f",mat.tab[i][j]);
+            fscanf(f,"%lf",&(mat.tab[i][j]));
         }
 	}
 	fclose(f);
+	return mat;
 }
 
 int ecritureMatricebin(char *nomfichierbin, Matrice mat){
