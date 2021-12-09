@@ -32,9 +32,12 @@ int ecritureMatricebin(char *nomfichierbin, Matrice mat){
         fwrite ( &mat.N , sizeof (int) , 1 , fbin );                                // Ecrit l'ordre de la matrice
 
         int q;
+        /*/
         for (q = 0; q <=mat.N; q++){
             fwrite ( &mat.tab[q] , sizeof (double) , mat.N+1 , fbin );      // Ecrit la matrice ligne par ligne
-        }
+        } //*/
+
+        fwrite ( &mat.tab[0] , sizeof (double) , (mat.N+1)*(mat.N+1) , fbin );
 
         // Fermeture du fichier
         fclose(fbin);
@@ -59,15 +62,16 @@ Matrice lectureMatricebin(char *nomfichierbin){
         Matrice mat = creerMatrice(num,N);
 
         int q;
+        /*
         for (q = 0; q <=mat.N; q++){
             fread ( &mat.tab[q] , sizeof (double) , mat.N+1 , fbin );    // Lit la matrice ligne par ligne
-        }
+        } //*/
+
+        fread ( &mat.tab[0] , sizeof (double) , (mat.N+1)*(mat.N+1) , fbin );    // Lit la matrice ligne par ligne
 
         // Fermeture du fichier
         fclose(fbin);
         return mat;
     }
 }
-
-
 
