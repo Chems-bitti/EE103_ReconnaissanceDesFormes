@@ -28,8 +28,8 @@ Matrice lectureMatrice(char * nomfichier){
 
 	fscanf ( f , "%d\n", & dim );
 	Matrice mat= creerMatrice(dim);
-	for(int i=0; i<dim; i++){
-        for(int j=0;j<dim-i; j++){
+	for(int i=0; i<=dim; i++){
+        for(int j=0;j<=dim-i; j++){
             fscanf(f,"%lf",&(mat.tab[i][j]));
         }
 	}
