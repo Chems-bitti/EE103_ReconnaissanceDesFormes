@@ -18,6 +18,24 @@ int ecritureMatrice(char * fname, Matrice mat){
 	
 }
 
+Matrice lectureMatrice(char * nomfichier){
+	int dim;
+	FILE* f = fopen(nomfichier, "r");				// Ouverture du fichier
+	if(f == NULL) {						// Vérification que le fichier à été ouvert correctement
+		printf("Erreur: Impossible d'ouvrir le fichier");
+		exit(1);
+	}
+
+	fscanf ( f , "%d", & dim );
+	Matrice mat= creerMatrice(dim);
+	for(int i=0; i<dim; i++){
+        for(int j=0;j<dim-i; j++){
+            fscanf(f,"%f",mat.tab[i][j]);
+        }
+	}
+	fclose(f);
+}
+
 int ecritureMatricebin(char *nomfichierbin, Matrice mat){
 
     FILE *fbin = fopen(nomfichierbin, "wb");
