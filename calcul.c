@@ -101,6 +101,7 @@ Matrice momcentre(BmpImg* pic, int n) {
 			}
 		}
 	}
+	supprMatrice(&mat);
 	return eta;
 
 }
