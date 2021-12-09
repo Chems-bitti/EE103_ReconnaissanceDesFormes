@@ -68,7 +68,7 @@ Matrice lectureMatricebin(char *nomfichierbin){
 
     if (fbin == NULL){
         printf("Erreur d'ouverture: %s \n",nomfichierbin);
-        return creerMatrice(0,0);
+        return creerMatrice(0);
     }else{
 
         int N;
