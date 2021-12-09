@@ -9,7 +9,7 @@
 #include "image.h"
 #include "listeSC.h"
 
-#define taillenom       15
+#define taillenom       20
 #define tailledescri    60
 
 // déclaration de la structure ImageBD
