@@ -131,7 +131,6 @@ LMat* CreerBD() {
 				fclose(t);
 				break;
 			}
-			fclose(t);
 
 		}
 		BmpImg pic = readBmpImage(PWD);
@@ -236,7 +235,6 @@ int main(){
 			fclose(t);
 			break;
 		}
-		fclose(t);
 
 	}
 	BmpImg pic = readBmpImage(nomImage);
