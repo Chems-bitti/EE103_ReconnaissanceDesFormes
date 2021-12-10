@@ -169,6 +169,7 @@ LMat* CreerBD() {
 	free(root->nom);
 	free(root);
 	free(nom);
+	free(PWD);
 	free(nommat);
 	return temp;
 }
