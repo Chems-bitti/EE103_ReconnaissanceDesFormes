@@ -203,7 +203,6 @@ LMat* comparaison(LMat* root, Matrice moment, int ordre) {
 	return forme;
 }
 int main(){
-	while(1) {
 	printf("------------------------Reconnaissance Des Fomes-------------------\n");
 	printf("Voulez vous créer une nouvelle base de données?[o]/[n] ");
 	char c;
@@ -258,7 +257,7 @@ int main(){
 	supprMatrice(&moment);
 	/**/
 	freeBmpImg(&pic);
-	}
+	
 	return 0;
 }
 	
