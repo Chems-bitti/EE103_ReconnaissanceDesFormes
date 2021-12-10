@@ -104,7 +104,8 @@ void EcritureBD(char* fname, LMat* root) {
 }
 
 LMat* CreerBD() {
-	char PWD[20] = "BD/";
+	char* PWD = calloc(20, sizeof(char));
+	strcpy(PWD, "BD/");
 	int flag = 1;
 	int ordre = 0;
 	printf("Nom de la base de donnée: ");
@@ -120,15 +121,17 @@ LMat* CreerBD() {
 		while(1) {
 			printf("Veuillez donner le nom de l'image avec son extension :");
 			scanf("%s", nom);
-			char PWD[20] = "BD/";
+			strcpy(PWD,"BD/");
 			strcat(PWD, nom);
 			FILE* t = fopen(PWD, "r");
 			if(t == NULL) {
 				printf("L'image donnée n'existe pas, veuillez donner une image valide\n");
 			}
 			else {
+				fclose(t);
 				break;
 			}
+			fclose(t);
 
 		}
 		BmpImg pic = readBmpImage(PWD);
@@ -229,8 +232,11 @@ int main(){
 			printf("L'image donnée n'existe pas, veuillez donner une image valide\n");
 		}
 		else {
+			fclose(t);
 			break;
 		}
+		fclose(t);
+
 	}
 	BmpImg pic = readBmpImage(nomImage);
 
