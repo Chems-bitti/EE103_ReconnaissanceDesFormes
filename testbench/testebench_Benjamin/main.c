@@ -127,16 +127,13 @@ BaseDonnee* creerBDmoment(char* s, DIR* rep, char* nomBD)
             /* Partie calcul de moment */
             // Calcul la matrice de moment de Legendre et l'ecrit dans un fichier text
 
-            printf("%s\n",fichierbmp);
             BmpImg pic = readBmpImage(fichierbmp);
-            printf("check1\n");
             Matrice mat = mom_legendre(&pic, N);
-            printf("check2\n");
             ecritureMatrice(fichiertxt, mat);
-            printf("check3\n");
-            // supprimer la matrice
+
+            supprMatrice(&mat);
         }
-    }printf("checkfin\n");
+    }
     return bd;
 }
 
@@ -161,9 +158,15 @@ void parcourirDossier(DIR* rep, char* chemin)
     lirebmpDossier(chemin, rep); /* Lecture... */
     closedir(rep); /* Fermeture du répertoire. */
 
+    printf("\n -- Confirme vous vouloir creer une base de donnee de toutes ces images ? -- \n");
+    char temp[100] = "";
+    fgets(temp, 99, stdin);
+
     rep = opendir(chemin);
     BaseDonnee* bd = creerBDmoment(chemin, rep, "Base_de_donnee");
     suprimeBD(bd);
+
+    printf(" -- La base de donnee a ete cree correctement -- \n");
 
     closedir(rep); /* Fermeture du répertoire. */
 
