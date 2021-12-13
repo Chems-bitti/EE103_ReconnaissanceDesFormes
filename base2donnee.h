@@ -14,7 +14,6 @@
 
 // déclaration de la structure ImageBD
 typedef struct {
-    char* nom;              // Nom de ce qu'il y a a l'image
     char* nomfimage;        // Nom du fichier image
     char* nomfmatrice;      // Nom du fichier de la matrice des moments de Legendre
     int N;                  // Ordre de la matrice de l'image
