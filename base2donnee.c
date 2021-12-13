@@ -13,8 +13,14 @@ BaseDonnee* creerBD(char* nom){
 ImageBD* creerImageBD(char* nomfimage, char* nomfmatrice){
 
     ImageBD* imgbd = malloc(sizeof(ImageBD));
-    imgbd->nomfimage = nomfimage;
-    imgbd->nomfmatrice = nomfmatrice;
+    int nbimg = strlen(nomfimage);
+    int nbmat = strlen(nomfmatrice);
+
+    imgbd->nomfimage = calloc(nbimg + 1,sizeof(char));
+    imgbd->nomfmatrice = calloc(nbmat + 1,sizeof(char));
+
+    strcpy(imgbd->nomfimage, nomfimage);
+    strcpy(imgbd->nomfmatrice, nomfmatrice);
     return imgbd;
 }
 
@@ -42,10 +48,10 @@ void suprimeBD(BaseDonnee* bd){
 
 void suprimeImageBD(ImageBD* imgbd){
 
-    imgbd->nomfimage = '\0';
-    imgbd->nomfmatrice = '\0';
+    free(imgbd->nomfimage);
+    free(imgbd->nomfmatrice);
+    free(imgbd);
 }
-
 
 
 
