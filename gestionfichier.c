@@ -1,27 +1,27 @@
 #include "gestionfichier.h"
 
-int ecritureMatrice(char * fname, Matrice mat){
-	
+void ecritureMatrice(char * fname, Matrice mat){
+
 	FILE* f = fopen(fname, "w");				// Ouverture du fichier
-	if(f == NULL) {						// VÃ©rification que le fichier Ã  Ã©tÃ© ouvert correctement
+	if(f == NULL) {						// Vérification que le fichier à été ouvert correctement
 		printf("Erreur: Impossible d'ouvrir le fichier");
 		exit(1);
 	}
 	fprintf(f, "%d\n", mat.N);
 	for(int i = 0; i <= mat.N; i++) {
-		for(int j = 0; j <= mat.N-i; j++) {			
+		for(int j = 0; j <= mat.N-i; j++) {
 				fprintf(f,"%le\t", mat.tab[i][j]);	// Ecriture du terme
 		}
-		fprintf(f,"\n");				// Retour Ã  la ligne
+		fprintf(f,"\n");				// Retour à la ligne
 	}
 	fclose(f);
-	
+
 }
 
 Matrice lectureMatrice(char * nomfichier){
 	int dim;
 	FILE* f = fopen(nomfichier, "r");				// Ouverture du fichier
-	if(f == NULL) {						// VÃ©rification que le fichier Ã  Ã©tÃ© ouvert correctement
+	if(f == NULL) {						// Vérification que le fichier à été ouvert correctement
 		printf("Erreur: Impossible d'ouvrir le fichier");
 		exit(1);
 	}
@@ -77,7 +77,7 @@ Matrice lectureMatricebin(char *nomfichierbin){
         fread ( &N , sizeof (int) , 1 , fbin );                    // Ecrit l'ordre de la matrice
 
         Matrice mat = creerMatrice(N);
-	
+
 	/*
         int q;
         for (q = 0; q <=mat.N; q++){
@@ -91,4 +91,3 @@ Matrice lectureMatricebin(char *nomfichierbin){
         return mat;
     }
 }
-

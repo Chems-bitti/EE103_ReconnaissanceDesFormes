@@ -13,7 +13,7 @@ struct BmpImg_s {
 	char* nomImg;				// Nom de l'image
 	unsigned int fileSize;		// Taille du fichier en octet
 	unsigned int headerSize;	// Taille de l'header en octet
-    unsigned int bmpSize;		// Taille de l'header BMP en octet
+  unsigned int bmpSize;		// Taille de l'header BMP en octet
 	unsigned int dibSize;		// Taille de l'header DIB en octet
 	unsigned int imgSize;		// Taille de l'image en octet
 	

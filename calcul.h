@@ -10,13 +10,13 @@
 	#include "matrice.h"
 
 
-	// Pas testÃ© !!
+	// Pas testé !!
 	/** Calcule la distance euclidienne entre deux matrice de moment
   	* @param mat1 la premier matrice
   	* @param mat2 la deuxieme matrice
   	* @return La distance euclidienne des deux matrices
   	*/
-	double distance_euclidienne(Matrice mat1, Matrice mat2);
+	double distance_euclidienne(Matrice mat1, Matrice mat2, int ordre);
 
 	/** Calcul la base de Legendre
 	  * @param x la variable en base de legendre
@@ -48,7 +48,7 @@
 
 	/* Calcul des moments de Legendre
 	 * @param BmpImg* pic : Pointeur vers l'image BMP
-	 * @param int n : ordre des moments 
+	 * @param int n : ordre des moments
 	 * @return double** mat : matrice des moments de Legendre
 	 */
 	Matrice mom_legendre(BmpImg* pic, int n);

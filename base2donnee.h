@@ -6,14 +6,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "image.h"
 #include "listeSC.h"
 
 #define taillenom 20
 #define taillenomfichier 60
 
 
-// dÃ©claration de la structure ImageBD
+// déclaration de la structure ImageBD
 typedef struct {
     char* nom;              // Nom de ce qu'il y a a l'image
     char* nomfimage;        // Nom du fichier image
@@ -21,7 +20,7 @@ typedef struct {
     int N;                  // Ordre de la matrice de l'image
 } ImageBD;
 
-// dÃ©claration de la structure BD
+// déclaration de la structure BD
 typedef struct {
     char* nom;              // Nom de la base de donnee
     int nbimage;            // Nombre d'image dans la base de donnee

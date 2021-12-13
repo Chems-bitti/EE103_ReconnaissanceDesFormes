@@ -1,3 +1,5 @@
+#include "base2donnee.h"
+
 // Fonction de base pour la manipulation des elements de la gestion de donnee
 BaseDonnee* creerBD(char* nom){
 
@@ -57,7 +59,6 @@ void suprimeImageBD(ImageBD* imgbd){
     imgbd->nomfimage = '\0';
     imgbd->nomfmatrice = '\0';
 }
-
 
 
 

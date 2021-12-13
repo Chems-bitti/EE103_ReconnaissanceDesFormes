@@ -4,12 +4,11 @@ Matrice creerMatrice(int N){
 
     Matrice mat = {N};
 
-    double **tab = malloc(N*sizeof(double*));
+    mat.tab = malloc((N+1)*sizeof(double*));
     int p;
     for(p = 0 ; p <= N; p++){
-        tab[p] = calloc(N, sizeof(double));
+        mat.tab[p] = calloc((N+1), sizeof(double));
     }
-    mat.tab = tab;
     return mat;
 }
 
