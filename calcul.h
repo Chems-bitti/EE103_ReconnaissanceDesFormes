@@ -10,7 +10,6 @@
 	#include "matrice.h"
 
 
-	// Pas testé !!
 	/** Calcule la distance euclidienne entre deux matrice de moment
   	* @param mat1 la premier matrice
   	* @param mat2 la deuxieme matrice
