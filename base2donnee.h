@@ -28,13 +28,9 @@ typedef struct {
 
 
 // Marche nickel
-/** Reconstruit un pixel de coordonnee (x,y) à partir d'une Matrice de moment de Legendre
-  * @param x coordonnee en abscisse
-  * @param y coordonnee en ordonnee
-  * @param mat Matrice de moment de Legendre
-  * @param Matrice coef : coefficients du polynome de legendre à passer à la fonction baseLegendre
-  * @param int dimX, int dimY : dimensions de notre image
-  * @return La valeur du pixel
+/** creer une base de donnee 
+  * @param nom correspond au nom de la base de donnee 
+  * @return La base de donnee cree
   */
 BaseDonnee* creerBD(char* nom);
 
@@ -42,11 +38,8 @@ BaseDonnee* creerBD(char* nom);
 
 // Marche nickel
 /** Reconstruit un pixel de coordonnee (x,y) à partir d'une Matrice de moment de Legendre
-  * @param x coordonnee en abscisse
-  * @param y coordonnee en ordonnee
-  * @param mat Matrice de moment de Legendre
-  * @param Matrice coef : coefficients du polynome de legendre à passer à la fonction baseLegendre
-  * @param int dimX, int dimY : dimensions de notre image
+  * @param nomfimage correspond au nom du fichier de l'image
+  * @param nomfmatrice correspond au nom du fichier de la matrice 
   * @return La valeur du pixel
   */
 ImageBD* creerImageBD(char* nomfimage, char* nomfmatrice);
