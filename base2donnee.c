@@ -21,26 +21,12 @@ ImageBD* creerImageBD(char* nomfimage, char* nomfmatrice){
 
 void ajoutImageBD(BaseDonnee* bd, ImageBD* imgbd){
 
-    // ajout alphabetique, pas obligatoire a faire si il y a le temps
-    /*
-    // boucle while pour ajouter l'image au bon endroit alphabetiquement
-    bd.listeimage->current = bd.listeimage->root;
-    ImageBD imgbdcurrent = (ImageBD)bd.listeimage->current->data  // image tempon pour la comparaison
-
-    ImageBD imgbdnext = (ImageBD)bd.listeimage->root->data  // image tempon pour la comparaison
-    while(hasNext(bd.listeimage) && (strcmp(bd.listeimage->current->data->nom, tmpnom) == -1)){
-    }
-
-    */
-
     ajout( bd->listeimage, imgbd, 1);
     bd->nbimage ++;
 }
 
 
 void suprimeBD(BaseDonnee* bd){
-
-    bd->nom = '\0';
     bd->nbimage = 0;
 
     // Tant que la liste n'est pas vide
