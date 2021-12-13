@@ -16,9 +16,9 @@ unsigned char reconstruction_pixel(int x, int y, Matrice mat, Matrice coef, int 
         }
 
     }
-    if(somme>1) somme = 1; // pour ne pas overflow?
-    if(somme < 0) somme = 0; // pour ne pas underflow?
-    // de toute façon on veut pas dépasser 255 et on ne veut pas être négatif
+    if(somme>1) somme = 1; // pour ne pas overflow
+    if(somme < 0) somme = 0; // pour ne pas underflow
+    
     return (unsigned char) (somme*255);
 
 }
