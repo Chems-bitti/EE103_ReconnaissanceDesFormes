@@ -8,7 +8,6 @@
 
 // déclaration de la structure Matrice
 typedef struct {
-    int num;            // Numero de la matrice pour l'identifier
     int N;              // Ordre de la Matrice
     double **tab;        // Tableau avec les valeurs de la matrice
 } Matrice;
@@ -18,7 +17,7 @@ typedef struct {
   * @param N ordre de la matrice
   * @return matrice
   */
-Matrice creerMatrice(int num, int N);
+Matrice creerMatrice(int N);
 
 /** Suppression d'une matrice
   * @param *mat adresse de la matrice a supprimer

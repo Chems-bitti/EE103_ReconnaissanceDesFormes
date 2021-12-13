@@ -16,15 +16,21 @@
   	* @param mat2 la deuxieme matrice
   	* @return La distance euclidienne des deux matrices
   	*/
-	double distance_euclidienne(Matrice mat1, Matrice mat2);
+	double distance_euclidienne(Matrice mat1, Matrice mat2, int ordre);
 
-	// Pas testé !!
 	/** Calcul la base de Legendre
-	  * @param x la valeur souhaité
+	  * @param x la variable en base de legendre
 	  * @param n l'ordre de la base
 	  * @return La valeur de x dans la base de Legendre d'ordre n
 	  */
-	double base_legendre(int x, int n);
+	double base_legendre(double x, int n, Matrice coef);
+
+	/* Calcul coefLegendre
+	 * @param int n : ordre du polynome
+	 * @return Matrice an: les coefficients du polynome
+	 */
+	Matrice coefLegendre(int n);
+
 
 	/* Calcul Moments centres normes
 	 * @param BmpImg* pic : Pointeur vers l'image BMP

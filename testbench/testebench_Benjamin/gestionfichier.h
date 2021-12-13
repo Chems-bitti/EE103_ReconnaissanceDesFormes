@@ -13,9 +13,8 @@
                     chaque valeur est separe par une tabulation
   * @param nomfichier Le nom du fichier dans lequel ecrire la matrice
   * @param mat La matrice qui sera ecrite
-  * @return 1 si le fichier s'est bien ouvert, sinon 0
   */
-int ecritureMatrice(char * nomfichier, Matrice mat);
+void ecritureMatrice(char * fname, Matrice mat);
 
 // Pas creer !!
 /** Recupere une matrice dans un fichier texte

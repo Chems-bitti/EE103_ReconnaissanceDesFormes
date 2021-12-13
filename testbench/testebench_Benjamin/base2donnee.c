@@ -1,36 +1,23 @@
 #include "base2donnee.h"
 
 // Fonction de base pour la manipulation des elements de la gestion de donnee
-BaseDonnee* creerBD(char* nom, char* description){
+BaseDonnee* creerBD(char* nom){
 
     BaseDonnee* bd = malloc(sizeof(bd));
     bd->nom = nom;
-    bd->description = description;
     bd->nbimage = 0;
-    bd->nbmatrice = 0;
     bd->listeimage = creerListe(sizeof(ImageBD));
     return bd;
 }
 
-ImageBD* creerImageBD(char* nom, char* description){
+ImageBD* creerImageBD(char* nomfimage, char* nomfmatrice){
 
     ImageBD* imgbd = malloc(sizeof(ImageBD));
-    imgbd->nom = nom;
-    imgbd->description = description;
-    imgbd->nbmatrice = 0;
-    imgbd->listematrice = creerListe(sizeof(MatriceBD));
+    imgbd->nomfimage = nomfimage;
+    imgbd->nomfmatrice = nomfmatrice;
     return imgbd;
 }
 
-MatriceBD* creerMatriceBD(char* nom, int type, int num, int N){
-
-    MatriceBD* matbd = malloc(sizeof(MatriceBD));
-    matbd->nom = nom;
-    matbd->type = type;
-    matbd->num = num;
-    matbd->N = N;
-    return matbd;
-}
 
 void ajoutImageBD(BaseDonnee* bd, ImageBD* imgbd){
 
@@ -50,21 +37,11 @@ void ajoutImageBD(BaseDonnee* bd, ImageBD* imgbd){
     bd->nbimage ++;
 }
 
-void ajoutMatriceBD(BaseDonnee* bd, ImageBD* imgbd, MatriceBD* matbd){
-
-    // si il y a le temps faire un ajout dans l'orde numerique
-
-    ajout( imgbd->listematrice, matbd, 1);
-    bd->nbmatrice ++;
-    imgbd->nbmatrice ++;
-}
 
 void suprimeBD(BaseDonnee* bd){
 
     bd->nom = '\0';
-    bd->description = '\0';
     bd->nbimage = 0;
-    bd->nbmatrice = 0;
 
     // Tant que la liste n'est pas vide
     while( bd->listeimage->root != NULL ){
@@ -79,34 +56,9 @@ void suprimeBD(BaseDonnee* bd){
 
 void suprimeImageBD(ImageBD* imgbd){
 
-    imgbd->nom = '\0';
-    imgbd->description = '\0';
-    imgbd->nbmatrice = 0;
-
-    // Tant que la liste n'est pas vide
-    while( imgbd->listematrice->root != NULL ){
-        MatriceBD* matbd = (MatriceBD *)imgbd->listematrice->root->data;   // On point vers la matrice de la cellule
-        suprimeMatriceBD(matbd);                                          // On supprime la matrice
-        suppr( imgbd->listematrice, 0 );                                 // On supprime le premier element
-    }
-    // On libere l'espace memoire occupe par la tete de liste
-    free( imgbd);
-    imgbd = NULL;
+    imgbd->nomfimage = '\0';
+    imgbd->nomfmatrice = '\0';
 }
-
-void suprimeMatriceBD(MatriceBD* matbd){
-
-    matbd->nom = '\0';
-    matbd->num = 0;
-    matbd->type = 0;
-    matbd->N = 0;
-    free(matbd);
-    matbd = NULL;
-}
-
-
-
-
 
 
 

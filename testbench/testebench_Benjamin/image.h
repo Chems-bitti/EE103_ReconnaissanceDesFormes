@@ -9,21 +9,25 @@
 #include "gestionfichier.h"
 
 
-// Pas testé !!
+// Marche nickel
 /** Reconstruit un pixel de coordonnee (x,y) à partir d'une Matrice de moment de Legendre
   * @param x coordonnee en abscisse
   * @param y coordonnee en ordonnee
   * @param mat Matrice de moment de Legendre
+  * @param Matrice coef : coefficients du polynome de legendre à passer à la fonction baseLegendre
+  * @param int dimX, int dimY : dimensions de notre image
   * @return La valeur du pixel
   */
-unsigned char reconstruction_pixel(int x, int y, Matrice mat);
+unsigned char reconstruction_pixel(int x, int y, Matrice mat, Matrice coef, int dimX, int dimY);
 
-// Pas testé !!
+
+// Marche nickel
 /** Reconstruit une image de coordonnee (x,y) à partir d'une Matrice de moment de Legendre et d'une image bmp
-  * @param mat Matrice de moment de Legendre
   * @param *pic image que l'on va reconstruire
+  * @param mat Matrice de moment de Legendre
+  * @param Matrice coef : coefficients du polynome de legendre à passer à la fonction reconstruction pixel
   */
-void reconstruction_image(Matrice mat, BmpImg* pic);
+void reconstruction_image(Matrice mat, BmpImg* pic, Matrice coef);
 
 
 

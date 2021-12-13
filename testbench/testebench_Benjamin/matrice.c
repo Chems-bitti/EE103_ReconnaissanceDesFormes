@@ -1,8 +1,8 @@
 #include "matrice.h"
 
-Matrice creerMatrice(int num, int N){
+Matrice creerMatrice(int N){
 
-    Matrice mat = {num, N};
+    Matrice mat = {N};
 
     double **tab = malloc(N*sizeof(double*));
     int p;
@@ -23,16 +23,15 @@ void supprMatrice(Matrice *mat){
         free(mat->tab);
         mat->tab = NULL;
     }
-    mat->num = 0;
     mat->N = 0;
 }
 
 void afficheMatrice(Matrice mat){
 
     if (mat.tab == NULL){
-        printf("Erreur : le tableau de la matrice %d ne pointe vers rien !\n", mat.num);
+        printf("Erreur : le tableau de la matrice %d ne pointe vers rien !\n");
     }else{
-        printf("Matrice numero\t: %d\n\tordre\t: %d\n", mat.num, mat.N);
+        printf("Matrice numero d'ordre\t: %d\n", mat.N);
         printf("\t----\t-----\t----\n");
         int p,q;
         for(p = 0 ; p <= mat.N; p++){

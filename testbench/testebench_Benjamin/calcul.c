@@ -1,17 +1,17 @@
 #include "calcul.h"
 
 
-double distance_euclidienne(Matrice mat1, Matrice mat2){
+double distance_euclidienne(Matrice mat1, Matrice mat2, int ordre){
 
     int p,q;
     double res= 0;
 
-    if (mat1.N != mat2.N){
-        printf("ERREUR : Les matrices ne sont pas de meme ordre\n");
+    if (mat1.N < ordre || mat2.N < ordre){
+        printf("ERREUR : Les matrices sont trop petites\n");
         return 0;
     }else{
-        for(p = 0 ; p < mat1.N; p++){
-            for(q = 0 ; q < mat1.N - p;q++){
+        for(p = 0 ; p < ordre; p++){
+            for(q = 0 ; q < ordre - p;q++){
                 res += pow(mat1.tab[p][q]-mat2.tab[p][q],2);
             }
         }
@@ -20,41 +20,56 @@ double distance_euclidienne(Matrice mat1, Matrice mat2){
 }
 
 
-double base_legendre(int x, int n){
+double base_legendre(double x, int n, Matrice coef){
     double res=0;
-    Matrice an = creerMatrice(0,n);
-
-    an.tab[0][0]=1;
-    if(n>0){
-        an.tab[1][0]=0;
-        an.tab[1][1]=1;
-    }
-
-    for(int i=2; i<=n; i++){    //Détermination de tous les an jusqu'à l'ordre souhaité
-        for(int j=0; j<=i; j++){
-            if(j==0){
-                an.tab[i][j]=-(i-1)*(an.tab[i-2][j])/i;
-            }
-            else if(j==i){
-                an.tab[i][j]=(2*(i-1)+1)*(an.tab[i-1][i-1])/i;
-            }
-            else{
-                an.tab[i][j]=((2*(i-1)+1)*(an.tab[i-1][j-1])-(an.tab[i-2][j]))/i;
-            }
-        }
-    }
-
+    x = (double) x;
     for(int i=0; i<=n; i++){
-        res+=(an.tab[n][i])*pow(x,i);
+        res+=(coef.tab[n][i])*pow(x,i);
     }
-    supprMatrice(&an);
-
     return res;
 }
 
+Matrice coefLegendre(int n) {
+	Matrice an = creerMatrice(n);
+	an.tab[0][0] = 1;
+	if(n>0){
+        	an.tab[1][0]=0;
+        	an.tab[1][1]=1;
+    	}
+	for(int i=2; i<=n; i++){    //Détermination de tous les an jusqu'à l'ordre souhaité
+        	for(int j=0; j<=i-2; j++){ // on veut pas que j==i
+                	an.tab[i][j]= (-i+1)*(an.tab[i-2][j])/ i;
+                }
+		for(int j = 0; j <= i; j++) { // rebouclage pour avoir les bons termes
+			an.tab[i][j] += (2*i-1)*an.tab[i-1][j-1]/ i;
+		}
+    	}
+    	return an;
+}
+
+Matrice mom_legendre(BmpImg* pic, int n) {
+	Matrice lambda = creerMatrice(n);
+	Matrice eta = momcentre(pic, n);
+	double Cpq = 0;
+	Matrice coef = coefLegendre(n);
+	for(int p = 0; p <= n; p++) {
+		for(int q = 0; q <= n-p; q++){
+			lambda.tab[p][q] = 0;
+			Cpq = (2*p+1)*(2*q+1)/4.;
+			for(int i = 0; i <= p; i++) {
+				for(int j = 0; j <= q; j++) {
+					lambda.tab[p][q] += Cpq*coef.tab[p][i]*coef.tab[q][j]*eta.tab[i][j];
+				}
+			}
+		}
+	}
+	supprMatrice(&coef);
+	supprMatrice(&eta);
+	return lambda;
+}
 Matrice momcentre(BmpImg* pic, int n) {
 
-	Matrice eta = creerMatrice(1,n); 	// allocation de la matrice
+	Matrice eta = creerMatrice(n); 	// allocation de la matrice
 	Matrice mat = mom(pic, n);		// calcul des moments géometrique
 
 	double omega = mat.tab[0][0]; 		// Nombre de pixels non nuls
@@ -86,13 +101,14 @@ Matrice momcentre(BmpImg* pic, int n) {
 			}
 		}
 	}
+	supprMatrice(&mat);
 	return eta;
 
 }
 
 
 Matrice mom(BmpImg* pic, int n) {
-	Matrice mat = creerMatrice(1,n);
+	Matrice mat = creerMatrice(n);
 	/* On calcule les moments pour tout p,q tel que p+q < N
 	 * Alors on aura N lignes
 	 * à chaque ligne i, le nombre de colonnes sera N - i
