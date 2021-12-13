@@ -27,7 +27,7 @@ typedef struct {
 } BaseDonnee;
 
 
-// Marche nickel
+
 /** creer une base de donnee 
   * @param nom correspond au nom de la base de donnee 
   * @return La base de donnee cree
@@ -36,52 +36,37 @@ BaseDonnee* creerBD(char* nom);
 
 
 
-// Marche nickel
-/** Reconstruit un pixel de coordonnee (x,y) à partir d'une Matrice de moment de Legendre
+
+/** cree une image que l'on mettra dans la base de donnee à partir du nom de l'image et du nom de la matrice
   * @param nomfimage correspond au nom du fichier de l'image
   * @param nomfmatrice correspond au nom du fichier de la matrice 
-  * @return La valeur du pixel
+  * @return l'image cree
   */
 ImageBD* creerImageBD(char* nomfimage, char* nomfmatrice);
 
 
 
-// Marche nickel
-/** Reconstruit un pixel de coordonnee (x,y) à partir d'une Matrice de moment de Legendre
-  * @param x coordonnee en abscisse
-  * @param y coordonnee en ordonnee
-  * @param mat Matrice de moment de Legendre
-  * @param Matrice coef : coefficients du polynome de legendre à passer à la fonction baseLegendre
-  * @param int dimX, int dimY : dimensions de notre image
-  * @return La valeur du pixel
+
+/** Ajoute l'image crée dans la base de donnee
+  * @param bd correspond à la base de donnee dans laquelle on mettra l'image
+  * @param imgbd est la l'image que l'on va mettre dans la base de donnee 
   */
 void ajoutImageBD(BaseDonnee* bd, ImageBD* imgbd);
 
 
 
 
-// Marche nickel
-/** Reconstruit un pixel de coordonnee (x,y) à partir d'une Matrice de moment de Legendre
-  * @param x coordonnee en abscisse
-  * @param y coordonnee en ordonnee
-  * @param mat Matrice de moment de Legendre
-  * @param Matrice coef : coefficients du polynome de legendre à passer à la fonction baseLegendre
-  * @param int dimX, int dimY : dimensions de notre image
-  * @return La valeur du pixel
+
+/** Fonction qui supprime la base de donnee 
+  * @param bd 
   */
 void suprimeBD(BaseDonnee* bd);
 
 
 
 
-// Marche nickel
-/** Reconstruit un pixel de coordonnee (x,y) à partir d'une Matrice de moment de Legendre
-  * @param x coordonnee en abscisse
-  * @param y coordonnee en ordonnee
-  * @param mat Matrice de moment de Legendre
-  * @param Matrice coef : coefficients du polynome de legendre à passer à la fonction baseLegendre
-  * @param int dimX, int dimY : dimensions de notre image
-  * @return La valeur du pixel
+/** fonction qui supprime l'image que l'on a mis dans la base de donnee
+  * @param imgbd 
   */
 void suprimeImageBD(ImageBD* imgbd);
 
