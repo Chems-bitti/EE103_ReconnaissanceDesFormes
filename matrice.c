@@ -28,7 +28,7 @@ void supprMatrice(Matrice *mat){
 void afficheMatrice(Matrice mat){
 
     if (mat.tab == NULL){
-        printf("Erreur : le tableau de la matrice %d ne pointe vers rien !\n");
+        printf("Erreur : le tableau de la matrice ne pointe vers rien !\n");
     }else{
         printf("Matrice numero d'ordre\t: %d\n", mat.N);
         printf("\t----\t-----\t----\n");

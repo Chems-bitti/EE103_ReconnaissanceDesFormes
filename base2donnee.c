@@ -35,12 +35,7 @@ void ajoutImageBD(BaseDonnee* bd, ImageBD* imgbd){
 void suprimeBD(BaseDonnee* bd){
     bd->nbimage = 0;
 
-    // Tant que la liste n'est pas vide
-    while( bd->listeimage->root != NULL ){
-        ImageBD* imgbd = (ImageBD *)bd->listeimage->root->data;         // On point vers l'image de la cellule
-        suprimeImageBD(imgbd);                                          // On supprime l'image
-        suppr( bd->listeimage, 0 );                                 // On supprime le premier element
-    }
+    freeListe(bd->listeimage);
     // On libere l'espace memoire occupe par la tete de liste
     free(bd);
     bd = NULL;

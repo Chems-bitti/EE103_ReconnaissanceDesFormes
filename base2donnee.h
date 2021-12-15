@@ -36,7 +36,6 @@ BaseDonnee* creerBD(char* nom);
 
 
 
-
 /** cree une image que l'on mettra dans la base de donnee à partir du nom de l'image et du nom de la matrice
   * @param nomfimage correspond au nom du fichier de l'image
   * @param nomfmatrice correspond au nom du fichier de la matrice 
