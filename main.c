@@ -31,7 +31,7 @@ int isbmp(char* s){
         return 0;
     }
     int len = strlen(s);
-    if ((s[len-2] == 'b') && (s[len-1] == 'm') && (s[len] == 'p')){
+    if ((s[len-3] == 'b') && (s[len-2] == 'm') && (s[len-1] == 'p')){
         return 1;
     }else{
         return 0;
@@ -44,8 +44,8 @@ int istxt(char* s){
     if (isDir(s)){
         return 0;
     }
-    char *temp = strchr(s, '.');
-    if ((temp[1] == 't') && (temp[2] == 'x') && (temp[3] == 't')){
+    int len = strlen(s);
+    if ((s[len-3] == 't') && (s[len-2] == 'x') && (s[len-1] == 't')){
         return 1;
     }else{
         return 0;
@@ -71,15 +71,15 @@ int bmptotxt(char* s){
 void lire(char* s)
 {
     char *enter = NULL;
-    char temp[100] = ""; /* Chaîne de caractères temporaire contenant la saisie de l'utilisateur. */
+    char temp[100] = ""; /* Chaï¿½ne de caractï¿½res temporaire contenant la saisie de l'utilisateur. */
 
     fgets(temp, 99, stdin);
 
-    enter = strchr(temp, '\n'); /* Voir le chapitre des saisies sécurisées. */
+    enter = strchr(temp, '\n'); /* Voir le chapitre des saisies sï¿½curisï¿½es. */
     if (enter != NULL)
         *enter = '\0';
 
-    strcat(s, temp); /* On ajoute à la suite le nom du dossier
+    strcat(s, temp); /* On ajoute ï¿½ la suite le nom du dossier
     pour obtenir quelque chose comme C:/nom/nom/ pour Win
     ou /nom/nom/ pour UNIX. */
 }
@@ -122,9 +122,9 @@ BaseDonnee* creerBDmoment(char* s, DIR* rep, char* nomBD)
             strcpy(fichiertxt, s);       // prend l'itineraire vers le repertoir ou se trouvera le fichier text
             strcat(fichiertxt, "/");
             strcat(fichiertxt, nomtxt); // ajoute le nom du fichier text
-	    ImageBD* im = creerImageBD(fichierbmp, fichiertxt);
-            ajoutImageBD(bd, im); // creer et ajoute l'imageBD avec les noms des fichiers bmp et txt dans la base de donnee
-	    suprimeImageBD(im);
+
+            ImageBD* img = creerImageBD(fichierbmp, fichiertxt);
+            ajoutImageBD(bd, img); // creer et ajoute l'imageBD avec les noms des fichiers bmp et txt dans la base de donnee
 
             /* Partie calcul de moment */
             // Calcul la matrice de moment de Legendre et l'ecrit dans un fichier text
@@ -158,7 +158,7 @@ void parcourirDossier(DIR* rep, char* chemin, char* nombd)
     }
 
     lirebmpDossier(chemin, rep); /* Lecture... */
-    closedir(rep); /* Fermeture du répertoire. */
+    closedir(rep); /* Fermeture du rï¿½pertoire. */
 
     printf("\n -- Voici les images qui seront incluses dans la base de donnee -- \n");
 
@@ -169,10 +169,10 @@ void parcourirDossier(DIR* rep, char* chemin, char* nombd)
 
     suprimeBD(bd);  // Supprime la base de donnee
 
-    closedir(rep); /* Fermeture du répertoire. */
+    closedir(rep); /* Fermeture du rï¿½pertoire. */
 
     //lire(chemin); /* Lecture du nouveau chemin; */
-    //parcourirDossier(rep, chemin); /* On rappelle la fonction parcourirDossier (récursivité). */
+    //parcourirDossier(rep, chemin); /* On rappelle la fonction parcourirDossier (rï¿½cursivitï¿½). */
 }
 
 void ecritureBD(BaseDonnee* bd, char* chemin){
@@ -220,8 +220,8 @@ BaseDonnee* lectureBD(char *chemin, char *nomfbd){
         // Boucle tant qu'on atteint pas la fin du fichier
         while(fscanf(ftxt, "%s\t%s\n", fichierbmp, fichiertxt) != EOF){ // Prend les information de la base de donnee avec le fichier txt
 	    ImageBD* im = creerImageBD(fichierbmp, fichiertxt);
-            ajoutImageBD(bd, im); // creer et ajoute l'imageBD avec les noms des fichiers bmp et txt dans la base de donnee
-	    suprimeImageBD(im);
+        ajoutImageBD(bd, im); // creer et ajoute l'imageBD avec les noms des fichiers bmp et txt dans la base de donnee
+
         }
         fclose(ftxt);
         return bd;
@@ -247,8 +247,7 @@ char *compare_img_BD(BaseDonnee *bd, char* fimg){
     Matrice mat = lectureMatrice(imgbd->nomfmatrice);           // Lit la matrice de l'image depuis le fichier txt
 
     double tmp = distance_euclidienne(matcomp, mat, N);             // Fait une premier comparaison a l'odre N
-
-/// !!! Faire une allocation dynamique du char et ne pas oublier de le supprimer dans le main
+    double test;
 
     char* res = malloc((taillechemin+1) * sizeof(char));
     strcpy(res,imgbd->nomfimage);                                   // Prend le nom de la premier image associer
@@ -256,11 +255,12 @@ char *compare_img_BD(BaseDonnee *bd, char* fimg){
     for(bd->listeimage->current = bd->listeimage->root; hasNext(bd->listeimage); getNext(bd->listeimage)){
 
         imgbd= (ImageBD* )bd->listeimage->current->data;
-
-        //distance_euclidienne()
-
-/// !!! Faire la meme chose que juste avant la boucle for avec un if qui prend la nouvelle image si distance eucli plus petit...
-
+        mat = lectureMatrice(imgbd->nomfmatrice);
+        test = distance_euclidienne(matcomp, mat, N);
+        if (test < tmp){
+            test = tmp;
+            strcpy(res,imgbd->nomfimage);
+        }
     }
     return res;
 }
@@ -310,7 +310,6 @@ int main()
 
     char com2;
     char fimg[taillechemin];  // Nom du fichier image a comparer
-    char fres[taillechemin];  // Nom de l'image resultat de la comparaison
     while(1){               // Boucle tant que l'utilisateur n'a pas mit une commande valide
         printf(" -- Souhaitez vous comparer une image a la base de donnee ? [o]/[n] -- \n");
         scanf(" %c", &com2);  // Prend la commande utilisateur
@@ -318,21 +317,21 @@ int main()
 
         if (com2 == 'o'){      // Si l'utilisateur veut comparer une image
 
-/// !!! Je sais pas pk mais il veut pas trouver le fichier qu'on met et il dit que c'est pas un bmp dans le test isbmp dans la fonction compare_img_BD juste apres
             printf(" -- Entrez le nom de l'image a comparer avec l'extention (.bmp) -- \n");
             scanf("%s", fimg);
-            fflush(stdin);
 
             // test si le fichier est bien dans le dossier
-            FILE* test = fopen(fimg, "r");
+            FILE* test = fopen(fimg, "rb");
+
             if(test == NULL) {
                 printf(" -- Ce fichier n'est pas present dans la dossier -- \n");
                 fclose(test);
             }
             else {
                 fclose(test);
-		char* res = compare_img_BD(bd, fimg);
+                char* res = compare_img_BD(bd, fimg);
                 printf(" -- L'image la plus proche est %s -- \n", res);
+                free(res);
             }
 
         }else if(com2 == 'n'){
@@ -352,7 +351,6 @@ int main()
     printf("fin\n");
     return 0;
 }
-
 
 
 
