@@ -12,14 +12,14 @@
 #define taillenomfichier 60
 
 
-// dÃ©claration de la structure ImageBD
+// déclaration de la structure ImageBD
 typedef struct {
     char* nomfimage;        // Nom du fichier image
     char* nomfmatrice;      // Nom du fichier de la matrice des moments de Legendre
     int N;                  // Ordre de la matrice de l'image
 } ImageBD;
 
-// dÃ©claration de la structure BD
+// déclaration de la structure BD
 typedef struct {
     char* nom;              // Nom de la base de donnee
     int nbimage;            // Nombre d'image dans la base de donnee
@@ -28,17 +28,17 @@ typedef struct {
 
 
 
-/** creer une base de donnee 
-  * @param nom correspond au nom de la base de donnee 
+/** creer une base de donnee
+  * @param nom correspond au nom de la base de donnee
   * @return La base de donnee cree
   */
 BaseDonnee* creerBD(char* nom);
 
 
 
-/** cree une image que l'on mettra dans la base de donnee Ã  partir du nom de l'image et du nom de la matrice
+/** cree une image que l'on mettra dans la base de donnee à partir du nom de l'image et du nom de la matrice
   * @param nomfimage correspond au nom du fichier de l'image
-  * @param nomfmatrice correspond au nom du fichier de la matrice 
+  * @param nomfmatrice correspond au nom du fichier de la matrice
   * @return l'image cree
   */
 ImageBD* creerImageBD(char* nomfimage, char* nomfmatrice);
@@ -46,9 +46,9 @@ ImageBD* creerImageBD(char* nomfimage, char* nomfmatrice);
 
 
 
-/** Ajoute l'image crÃ©e dans la base de donnee
-  * @param bd correspond Ã  la base de donnee dans laquelle on mettra l'image
-  * @param imgbd est la l'image que l'on va mettre dans la base de donnee 
+/** Ajoute l'image crée dans la base de donnee
+  * @param bd correspond à la base de donnee dans laquelle on mettra l'image
+  * @param imgbd est la l'image que l'on va mettre dans la base de donnee
   */
 void ajoutImageBD(BaseDonnee* bd, ImageBD* imgbd);
 
@@ -56,8 +56,8 @@ void ajoutImageBD(BaseDonnee* bd, ImageBD* imgbd);
 
 
 
-/** Fonction qui supprime la base de donnee 
-  * @param bd 
+/** Fonction qui supprime la base de donnee
+  * @param bd
   */
 void suprimeBD(BaseDonnee* bd);
 
@@ -65,7 +65,7 @@ void suprimeBD(BaseDonnee* bd);
 
 
 /** fonction qui supprime l'image que l'on a mis dans la base de donnee
-  * @param imgbd 
+  * @param imgbd
   */
 void suprimeImageBD(ImageBD* imgbd);
 

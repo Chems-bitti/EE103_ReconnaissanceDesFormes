@@ -50,4 +50,3 @@ void suprimeImageBD(ImageBD* imgbd){
 
 
 
-

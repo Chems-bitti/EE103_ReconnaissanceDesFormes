@@ -267,10 +267,6 @@ char *compare_img_BD(BaseDonnee *bd, char* fimg){
 
 
 
-
-
-
-
 int main()
 {
     char chemin[taillechemin] = "base_de_donnee";
@@ -284,7 +280,7 @@ int main()
     }
 
     /** Partie creartion base de donnee */
-    printf(" -- Souhaitez vous mettre a jour la base de donnee ? [o]/[n] -- \n");
+    printf(" -- Souhaitez vous mettre a jour la base de donnee ? [o]/[n] -> ");
     char com1;
     while(1){               // Boucle tant que l'utilisateur n'a pas mit une commande valide
         scanf(" %c", &com1);  // Prend la commande utilisateur
@@ -311,27 +307,29 @@ int main()
     char com2;
     char fimg[taillechemin];  // Nom du fichier image a comparer
     while(1){               // Boucle tant que l'utilisateur n'a pas mit une commande valide
-        printf(" -- Souhaitez vous comparer une image a la base de donnee ? [o]/[n] -- \n");
+        printf(" -- Souhaitez vous comparer une image a la base de donnee ? [o]/[n] -> ");
         scanf(" %c", &com2);  // Prend la commande utilisateur
         fflush(stdin);
 
         if (com2 == 'o'){      // Si l'utilisateur veut comparer une image
 
-            printf(" -- Entrez le nom de l'image a comparer avec l'extention (.bmp) -- \n");
+            printf(" -- Entrez le nom de l'image a comparer avec l'extention (.bmp) -> ");
             scanf("%s", fimg);
 
             // test si le fichier est bien dans le dossier
             FILE* test = fopen(fimg, "rb");
 
+            // Si le fichier n'est pas dans le dossier renvoie un message d'erreur et reboucle
             if(test == NULL) {
                 printf(" -- Ce fichier n'est pas present dans la dossier -- \n");
-                fclose(test);
+                fclose(test);  // ferme le fichier de verification
             }
             else {
-                fclose(test);
-                char* res = compare_img_BD(bd, fimg);
-                printf(" -- L'image la plus proche est %s -- \n", res);
-                free(res);
+                fclose(test);  // ferme le fichier de verification
+                char* res = compare_img_BD(bd, fimg);   // Prend l'image la plus proche de la base de donnee
+                strcpy(res,strrchr(res,'/')+1);         // Enleve la partie du nom de l'image sur le chemin du dossier
+                printf(" -- L'image la plus proche dans la base de donnee est : %s -- \n\n", res);
+                free(res);   // Supprime la chaine de caractere car alloue dynamiquement dans compare_img_BD
             }
 
         }else if(com2 == 'n'){
@@ -348,7 +346,7 @@ int main()
     suprimeBD(bd);
 
 
-    printf("fin\n");
+    printf(" - Fin de programme -\n");
     return 0;
 }
 

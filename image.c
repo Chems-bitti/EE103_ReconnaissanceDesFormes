@@ -18,7 +18,7 @@ unsigned char reconstruction_pixel(int x, int y, Matrice mat, Matrice coef, int 
     }
     if(somme>1) somme = 1; // pour ne pas overflow
     if(somme < 0) somme = 0; // pour ne pas underflow
-    
+
     return (unsigned char) (somme*255);
 
 }
@@ -29,8 +29,7 @@ void reconstruction_image(Matrice mat, BmpImg* pic, Matrice coef){
     for (int x = 0; x < pic->dimX ; x++){
         for (int y = 0 ; y < pic->dimY ; y++){
             setPixel(*pic,reconstruction_pixel(x,y,mat, coef, pic->dimX, pic->dimY),x,y);    //assigner la valeur de la fonction reconstruction pixel aux pixel x et y;
-                                                                                             //de cette maniÃ¨re on reforme chaque pixel puis l'image entiÃ¨re
+                                                                                             //de cette manière on reforme chaque pixel puis l'image entière
         }
     }
 }
-

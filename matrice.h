@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-// déclaration de la structure Matrice
+// dï¿½claration de la structure Matrice
 typedef struct {
     int N;              // Ordre de la Matrice
     double **tab;        // Tableau avec les valeurs de la matrice
@@ -25,7 +25,7 @@ Matrice creerMatrice(int N);
 void supprMatrice(Matrice *mat);
 
 /** Affiche le contenu d'une Matrice
-  * Les deux premiers entier sont pour le numéro et l'ordre de la matrice, le tableau en deux dimension pour les valeurs
+  * Les deux premiers entier sont pour le numï¿½ro et l'ordre de la matrice, le tableau en deux dimension pour les valeurs
   * @param mat La matrice a afficher
   */
 void afficheMatrice(Matrice mat);

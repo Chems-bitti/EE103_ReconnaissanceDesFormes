@@ -3,7 +3,7 @@
 void ecritureMatrice(char * fname, Matrice mat){
 
 	FILE* f = fopen(fname, "w");				// Ouverture du fichier
-	if(f == NULL) {						// Vérification que le fichier à été ouvert correctement
+	if(f == NULL) {						// Vï¿½rification que le fichier ï¿½ ï¿½tï¿½ ouvert correctement
 		printf("Erreur: Impossible d'ouvrir le fichier");
 		exit(1);
 	}
@@ -12,7 +12,7 @@ void ecritureMatrice(char * fname, Matrice mat){
 		for(int j = 0; j <= mat.N-i; j++) {
 				fprintf(f,"%le\t", mat.tab[i][j]);	// Ecriture du terme
 		}
-		fprintf(f,"\n");				// Retour à la ligne
+		fprintf(f,"\n");				// Retour ï¿½ la ligne
 	}
 	fclose(f);
 
@@ -21,7 +21,7 @@ void ecritureMatrice(char * fname, Matrice mat){
 Matrice lectureMatrice(char * nomfichier){
 	int dim;
 	FILE* f = fopen(nomfichier, "r");				// Ouverture du fichier
-	if(f == NULL) {						// Vérification que le fichier à été ouvert correctement
+	if(f == NULL) {						// Vï¿½rification que le fichier ï¿½ ï¿½tï¿½ ouvert correctement
 		printf("Erreur: Impossible d'ouvrir le fichier");
 		exit(1);
 	}
