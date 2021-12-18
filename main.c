@@ -10,6 +10,7 @@
 #define taillechemin 100
 
 
+
 #define N 45
 
 
@@ -99,8 +100,7 @@ void lirebmpDossier(char* s, DIR* rep)
 }
 
 
-BaseDonnee* creerBDmoment(char* s, DIR* rep, char* nomBD)
-{
+BaseDonnee* creerBDmoment(char* s, DIR* rep, char* nomBD) {
     struct dirent* ent = NULL;
 
     char fichiertxt[taillechemin];              // Itinieraire vers le fichier
@@ -238,7 +238,9 @@ char *compare_img_BD(BaseDonnee *bd, char* fimg){
         printf(" -- Attention la base de donnee '%s' est vide !! -- \n",bd->nom);
         return "Base de donnee vide !!";
     }
-
+    // Vérification si le fichier existe
+    FILE* f = fopen(fimg, "r"); 
+    if( f == NULL ) return "Le fichier n'existe pas";
     BmpImg pic = readBmpImage(fimg);                            // Recupre l'image
     Matrice matcomp = mom_legendre(&pic, N);                    // Calcul les moment de Legendre de l'image a comparer
     freeBmpImg(&pic);
@@ -251,17 +253,20 @@ char *compare_img_BD(BaseDonnee *bd, char* fimg){
 
     char* res = malloc((taillechemin+1) * sizeof(char));
     strcpy(res,imgbd->nomfimage);                                   // Prend le nom de la premier image associer
+    supprMatrice(&mat);
 
     for(bd->listeimage->current = bd->listeimage->root; hasNext(bd->listeimage); getNext(bd->listeimage)){
 
-        imgbd= (ImageBD* )bd->listeimage->current->data;
-        mat = lectureMatrice(imgbd->nomfmatrice);
+        ImageBD* imgbd= (ImageBD* )bd->listeimage->current->data;
+        Matrice mat = lectureMatrice(imgbd->nomfmatrice);
         test = distance_euclidienne(matcomp, mat, N);
         if (test < tmp){
             test = tmp;
             strcpy(res,imgbd->nomfimage);
         }
+    	supprMatrice(&mat);
     }
+    supprMatrice(&matcomp);
     return res;
 }
 
@@ -313,20 +318,23 @@ int main()
 
         if (com2 == 'o'){      // Si l'utilisateur veut comparer une image
 
+	    char comp[taillechemin] = "comp/";
             printf(" -- Entrez le nom de l'image a comparer avec l'extention (.bmp) -> ");
             scanf("%s", fimg);
+	    strcat(comp, fimg);
+	    
 
             // test si le fichier est bien dans le dossier
-            FILE* test = fopen(fimg, "rb");
+            FILE* test = fopen(comp, "rb");
 
             // Si le fichier n'est pas dans le dossier renvoie un message d'erreur et reboucle
             if(test == NULL) {
                 printf(" -- Ce fichier n'est pas present dans la dossier -- \n");
-                fclose(test);  // ferme le fichier de verification
+		return 1;
             }
             else {
                 fclose(test);  // ferme le fichier de verification
-                char* res = compare_img_BD(bd, fimg);   // Prend l'image la plus proche de la base de donnee
+                char* res = compare_img_BD(bd, comp);   // Prend l'image la plus proche de la base de donnee
                 strcpy(res,strrchr(res,'/')+1);         // Enleve la partie du nom de l'image sur le chemin du dossier
                 printf(" -- L'image la plus proche dans la base de donnee est : %s -- \n\n", res);
                 free(res);   // Supprime la chaine de caractere car alloue dynamiquement dans compare_img_BD
@@ -334,16 +342,56 @@ int main()
 
         }else if(com2 == 'n'){
             fflush(stdin);
+				
             break;
         }else{
             printf(" -- Veulliez donner une reponse valide -- \n");
             fflush(stdin);
         }
+	
+	
+    
+
+    char com3;
+    while(1) {
+    	printf(" -- Voulez vous reconstruire votre image ? [o]/[n] ->");
+	scanf(" %c", &com3);
+	fflush(stdin);
+	if(com3 == 'o') {
+	    printf(" -- Veuillez patientez pendant la reconstruction de votre image... -- \n");	
+	    char rec[taillechemin] = "REC/reconstruction"; //Debut du nom de l'image reconstruite
+	    char comp[taillechemin] = "comp/";		   // Lien vers l'image comparée
+	    strcat(comp, fimg);
+	    BmpImg orig = readBmpImage(comp);		   // Lecture image
+     	    BmpImg pic = createBmpImg("reconstruction", orig.dimX, orig.dimY); //Création image de meme taille
+	    Matrice mat = mom_legendre (&orig, N);	   // Calcul moments
+	    Matrice coef = coefLegendre(N);		   // Calculs coefficients Legendre
+   	    freeBmpImg(&orig);			           // Désallocation Image lue
+	    reconstruction_image(mat, &pic, coef);         // Reconstruction
+	    supprMatrice (&mat);			   // Désallocation Matrice Moment
+	    supprMatrice (&coef);			   // Désallocation Matrice coef
+	    writeBmpImage(strcat(rec, fimg), &pic);	   // Ecriture de l'image reconstruite
+	    freeBmpImg(&pic);				   // Désallocation image reconstruite
+	    printf(" -- Votre image a été reconstruite, vous pouvez la trouver dans le répértoire REC/ --\n");
+	    break;
+		
+
+	}else if(com3 == 'n') {
+	    fflush(stdin);
+	    break;
+	}
+	else {
+	    printf("-- Veuillez donner une réponse valide --\n"); 	
+	    fflush(stdin);
+	}
+
+
     }
+    }
+			
 
-/// !!! Faire une partie qui permet de reconstruire une image si l'utilisateur le veut
 
-    suprimeBD(bd);
+    	suprimeBD(bd);
 
 
     printf(" - Fin de programme -\n");

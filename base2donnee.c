@@ -35,17 +35,23 @@ void ajoutImageBD(BaseDonnee* bd, ImageBD* imgbd){
 void suprimeBD(BaseDonnee* bd){
     bd->nbimage = 0;
 
-    freeListe(bd->listeimage);
+    // Tant que la liste n'est pas vide
+    while(bd->listeimage->root != NULL) {
+	    suprimeImageBD(bd->listeimage->root->data);
+	    suppr(bd->listeimage, 0);
+    }
+    free(bd->listeimage);
     // On libere l'espace memoire occupe par la tete de liste
     free(bd);
     bd = NULL;
+
+
 }
 
 void suprimeImageBD(ImageBD* imgbd){
 
     free(imgbd->nomfimage);
     free(imgbd->nomfmatrice);
-    free(imgbd);
 }
 
 
