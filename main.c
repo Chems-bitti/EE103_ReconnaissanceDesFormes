@@ -135,6 +135,7 @@ BaseDonnee* creerBDmoment(char* s, DIR* rep, char* nomBD) {
 
             freeBmpImg(&pic);                       // Supprime l'image
             supprMatrice(&mat);                     // Supprime la matrice de moment
+	    free(img);
         }
     }
     return bd;
@@ -221,6 +222,7 @@ BaseDonnee* lectureBD(char *chemin, char *nomfbd){
         while(fscanf(ftxt, "%s\t%s\n", fichierbmp, fichiertxt) != EOF){ // Prend les information de la base de donnee avec le fichier txt
 	    ImageBD* im = creerImageBD(fichierbmp, fichiertxt);
         ajoutImageBD(bd, im); // creer et ajoute l'imageBD avec les noms des fichiers bmp et txt dans la base de donnee
+	free(im);
 
         }
         fclose(ftxt);
@@ -241,6 +243,7 @@ char *compare_img_BD(BaseDonnee *bd, char* fimg){
     // Vérification si le fichier existe
     FILE* f = fopen(fimg, "r"); 
     if( f == NULL ) return "Le fichier n'existe pas";
+    fclose(f);
     BmpImg pic = readBmpImage(fimg);                            // Recupre l'image
     Matrice matcomp = mom_legendre(&pic, N);                    // Calcul les moment de Legendre de l'image a comparer
     freeBmpImg(&pic);
@@ -319,7 +322,7 @@ int main()
         if (com2 == 'o'){      // Si l'utilisateur veut comparer une image
 
 	    char comp[taillechemin] = "comp/";
-            printf(" -- Entrez le nom de l'image a comparer avec l'extention (.bmp) -> ");
+            printf(" -- Entrez le nom de l'image a comparer avec l'extension (.bmp) -> ");
             scanf("%s", fimg);
 	    strcat(comp, fimg);
 	    
@@ -354,7 +357,7 @@ int main()
 
     char com3;
     while(1) {
-    	printf(" -- Voulez vous reconstruire votre image ? [o]/[n] ->");
+    	printf(" -- Voulez vous reconstruire votre image ? [o]/[n] -> ");
 	scanf(" %c", &com3);
 	fflush(stdin);
 	if(com3 == 'o') {

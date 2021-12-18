@@ -89,7 +89,7 @@ Matrice coefLegendre(int n) {
         	for(int j=0; j<=i-2; j++){ // on veut pas que j==i
                 	an.tab[i][j]= (-i+1)*(an.tab[i-2][j])/ i;
                 }
-		for(int j = 0; j <= i; j++) { // rebouclage pour avoir les bons termes
+		for(int j = 1; j <= i; j++) { // rebouclage pour avoir les bons termes
 			an.tab[i][j] += (2*i-1)*an.tab[i-1][j-1]/ i;
 		}
     	}

@@ -4,7 +4,9 @@
 BaseDonnee* creerBD(char* nom){
 
     BaseDonnee* bd = malloc(sizeof(bd));
-    bd->nom = nom;
+    int len = strlen(nom);
+    bd->nom = calloc(len+1, sizeof(char));
+    strcpy(bd->nom, nom);
     bd->nbimage = 0;
     bd->listeimage = creerListe(sizeof(ImageBD));
     return bd;
@@ -42,6 +44,7 @@ void suprimeBD(BaseDonnee* bd){
     }
     free(bd->listeimage);
     // On libere l'espace memoire occupe par la tete de liste
+    free(bd->nom);
     free(bd);
     bd = NULL;
 
