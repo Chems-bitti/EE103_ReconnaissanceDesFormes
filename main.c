@@ -1,284 +1,17 @@
 
-#include <string.h>
-#include <dirent.h>
-#include "image.h"
-#include "calcul.h"
-#include "matrice.h"
-#include "gestionfichier.h"
+// Bibliotheque
 #include "base2donnee.h"
 
-#define taillechemin 100
+
+#define tailleimg 100  // Taille des images a reconstruire (plus elle sont grande plus ca prend du temps)
 
 
+int main(){
 
-#define N 45
-
-
-void ecritureBD(BaseDonnee* bd, char* chemin);
-
-
-int isDir(char* s)
-{
-    if ((strchr(s, '.')) == NULL) /* Si le nom du chemin n'a pas de point (une extension). */
-        return 1;
-    else
-        return 0;
-}
-
-int isbmp(char* s){
-
-    /* Si le fichier n'a pas d'extension (premier test pour evite les erreurs) */
-    if (isDir(s)){
-        return 0;
-    }
-    int len = strlen(s);
-    if ((s[len-3] == 'b') && (s[len-2] == 'm') && (s[len-1] == 'p')){
-        return 1;
-    }else{
-        return 0;
-    }
-}
-
-int istxt(char* s){
-
-    /* Si le fichier n'a pas d'extension (premier test pour evite les erreurs) */
-    if (isDir(s)){
-        return 0;
-    }
-    int len = strlen(s);
-    if ((s[len-3] == 't') && (s[len-2] == 'x') && (s[len-1] == 't')){
-        return 1;
-    }else{
-        return 0;
-    }
-}
-
-int bmptotxt(char* s){
-    /* si le fichier n'est pas un bmp */
-    if (isbmp(s) == 0){
-        return 0;
-    }else{
-        /* Prend le pointeur vers '.' */
-        char *temp = strchr(s, '.');
-
-        /* Remplace les 3 carateres suivant */
-        temp[1] = 't';
-        temp[2] = 'x';
-        temp[3] = 't';
-        return 1;
-    }
-}
-
-void lire(char* s)
-{
-    char *enter = NULL;
-    char temp[100] = ""; /* Cha�ne de caract�res temporaire contenant la saisie de l'utilisateur. */
-
-    fgets(temp, 99, stdin);
-
-    enter = strchr(temp, '\n'); /* Voir le chapitre des saisies s�curis�es. */
-    if (enter != NULL)
-        *enter = '\0';
-
-    strcat(s, temp); /* On ajoute � la suite le nom du dossier
-    pour obtenir quelque chose comme C:/nom/nom/ pour Win
-    ou /nom/nom/ pour UNIX. */
-}
-
-
-void lirebmpDossier(char* s, DIR* rep)
-{
-    struct dirent* ent = NULL;
-
-    printf(" -- Lecture des images bmp du dossier '%s' -- \n", s);
-
-    while ((ent = readdir(rep)) != NULL){ /* Lecture du dossier. */
-        if (isbmp(ent->d_name)){
-            printf(" -> %s\n", ent->d_name);
-        }
-    }
-}
-
-
-BaseDonnee* creerBDmoment(char* s, DIR* rep, char* nomBD) {
-    struct dirent* ent = NULL;
-
-    char fichiertxt[taillechemin];              // Itinieraire vers le fichier
-    char fichierbmp[taillechemin];              // Itinieraire vers le fichier
-    char nomtxt[25];                   // Nom du fichier txt de la matrice de moment
-    BaseDonnee* bd = creerBD(nomBD);    // Creer une base de donnee pour lister les images et leur matrice de moment
-
-    while ((ent = readdir(rep)) != NULL){ /* Lecture du dossier. */
-        if (isbmp(ent->d_name)){
-            /* Partie base de donnee et memoir */
-            // prend l'itineraire vers le fichier image
-            strcpy(fichierbmp, s);       // prend l'itineraire vers le repertoir ou se trouve l'image
-            strcat(fichierbmp, "/");
-            strcat(fichierbmp, ent->d_name); // ajoute le nom de l'image
-
-            // prend l'itineraire vers le fichier text
-            strcpy(nomtxt, ent->d_name);     // prend le nom du fichier bmp
-            bmptotxt(nomtxt);                // change l'extension de bmp a txt
-            strcpy(fichiertxt, s);       // prend l'itineraire vers le repertoir ou se trouvera le fichier text
-            strcat(fichiertxt, "/");
-            strcat(fichiertxt, nomtxt); // ajoute le nom du fichier text
-
-            ImageBD* img = creerImageBD(fichierbmp, fichiertxt);
-            ajoutImageBD(bd, img); // creer et ajoute l'imageBD avec les noms des fichiers bmp et txt dans la base de donnee
-
-            /* Partie calcul de moment */
-            // Calcul la matrice de moment de Legendre et l'ecrit dans un fichier text
-
-            BmpImg pic = readBmpImage(fichierbmp);  // Recupre l'image
-            Matrice mat = mom_legendre(&pic, N);    // Calcul les moment de Legendre
-            ecritureMatrice(fichiertxt, mat);       // Ecrit la matrice de moment dans un fichier txt
-
-            freeBmpImg(&pic);                       // Supprime l'image
-            supprMatrice(&mat);                     // Supprime la matrice de moment
-	    free(img);
-        }
-    }
-    return bd;
-}
-
-void parcourirDossier(DIR* rep, char* chemin, char* nombd)
-{
-
-    if (!isDir(chemin))
-    {
-        printf("%s n'est pas un dossier", chemin);
-        exit(-1);
-    }
-
-    rep = opendir(chemin);
-
-    if (rep == NULL)
-    {
-        printf("Le dossier '%s' n'a pas pu etre ouvert", chemin);
-        exit(-1);
-    }
-
-    lirebmpDossier(chemin, rep); /* Lecture... */
-    closedir(rep); /* Fermeture du r�pertoire. */
-
-    printf("\n -- Voici les images qui seront incluses dans la base de donnee -- \n");
-
-
-    rep = opendir(chemin);
-    BaseDonnee* bd = creerBDmoment(chemin, rep, nombd);
-    ecritureBD(bd, chemin);  // Ecrit la base de donnee dans un fichier txt
-
-    suprimeBD(bd);  // Supprime la base de donnee
-
-    closedir(rep); /* Fermeture du r�pertoire. */
-
-    //lire(chemin); /* Lecture du nouveau chemin; */
-    //parcourirDossier(rep, chemin); /* On rappelle la fonction parcourirDossier (r�cursivit�). */
-}
-
-void ecritureBD(BaseDonnee* bd, char* chemin){
-
-    char fichiertemp[taillechemin];              // Itinieraire vers le fichier
-    strcpy(fichiertemp, chemin);       // prend l'itineraire vers le repertoir ou se trouvera le fichier text
-    strcat(fichiertemp, "/");
-    strcat(fichiertemp, bd->nom);     // ajoute le nom du fichier de la base de donnee
-    FILE* ftxt = fopen(fichiertemp, "w");
-    if (ftxt == NULL){
-        printf(" -- Le fichier '%s' n'a pas pu etre ouvert --\n", fichiertemp);
-        printf(" -- La base de donnee n'a pas pu etre ecrite --\n");
-    }else{
-
-        fprintf(ftxt,"Nombre d'image : %d\n", bd->nbimage);
-        /* Pour chaque image de la base de donnee met le nom du fichier txt et bmp */
-        for(bd->listeimage->current = bd->listeimage->root; hasNext(bd->listeimage); getNext(bd->listeimage)){
-
-            ImageBD* imgbd= (ImageBD* )bd->listeimage->current->data;
-            fprintf(ftxt, "%s\t%s\n", imgbd->nomfimage, imgbd->nomfmatrice);
-        }
-    	fclose(ftxt);
-    }
-}
-
-BaseDonnee* lectureBD(char *chemin, char *nomfbd){
-
-    char fichiertemp[taillechemin];              // Itinieraire vers le fichier
-    strcpy(fichiertemp, chemin);       // prend l'itineraire vers le repertoir ou se trouvera le fichier text
-    strcat(fichiertemp, "/");
-    strcat(fichiertemp, nomfbd);     // ajoute le nom du fichier de la base de donnee
-    FILE* ftxt = fopen(fichiertemp, "r");
-    if (ftxt == NULL){
-        printf(" -- Le fichier '%s' n'a pas pu etre ouvert --\n", fichiertemp);
-        printf(" -- La base de donnee n'a pas pu etre lu --\n");
-        fclose(ftxt);
-        return creerBD(nomfbd);
-    }else{
-
-        char fichierbmp[taillechemin];
-        char fichiertxt[taillechemin];
-
-        BaseDonnee* bd = creerBD(nomfbd);
-        fscanf(ftxt, "Nombre d'image : %d\n", &bd->nbimage);
-        // Boucle tant qu'on atteint pas la fin du fichier
-        while(fscanf(ftxt, "%s\t%s\n", fichierbmp, fichiertxt) != EOF){ // Prend les information de la base de donnee avec le fichier txt
-	    ImageBD* im = creerImageBD(fichierbmp, fichiertxt);
-        ajoutImageBD(bd, im); // creer et ajoute l'imageBD avec les noms des fichiers bmp et txt dans la base de donnee
-	free(im);
-
-        }
-        fclose(ftxt);
-        return bd;
-    }
-}
-
-char *compare_img_BD(BaseDonnee *bd, char* fimg){
-
-    if (isbmp(fimg) == 0){
-        printf(" -- Erreur l'image donnee n'est pas un fichier bmp -- \n");
-        return "\0";
-    }
-    if (bd->listeimage->root->data ==  NULL){
-        printf(" -- Attention la base de donnee '%s' est vide !! -- \n",bd->nom);
-        return "Base de donnee vide !!";
-    }
-    // Vérification si le fichier existe
-    FILE* f = fopen(fimg, "r"); 
-    if( f == NULL ) return "Le fichier n'existe pas";
-    fclose(f);
-    BmpImg pic = readBmpImage(fimg);                            // Recupre l'image
-    Matrice matcomp = mom_legendre(&pic, N);                    // Calcul les moment de Legendre de l'image a comparer
-    freeBmpImg(&pic);
-
-    ImageBD* imgbd= (ImageBD* )bd->listeimage->root->data;      // Prend la premier une image de la base de donnee
-    Matrice mat = lectureMatrice(imgbd->nomfmatrice);           // Lit la matrice de l'image depuis le fichier txt
-
-    double tmp = distance_euclidienne(matcomp, mat, N);             // Fait une premier comparaison a l'odre N
-    double test;
-
-    char* res = malloc((taillechemin+1) * sizeof(char));
-    strcpy(res,imgbd->nomfimage);                                   // Prend le nom de la premier image associer
-    supprMatrice(&mat);
-
-    for(bd->listeimage->current = bd->listeimage->root; hasNext(bd->listeimage); getNext(bd->listeimage)){
-
-        ImageBD* imgbd= (ImageBD* )bd->listeimage->current->data;
-        Matrice mat = lectureMatrice(imgbd->nomfmatrice);
-        test = distance_euclidienne(matcomp, mat, N);
-        if (test < tmp){
-            test = tmp;
-            strcpy(res,imgbd->nomfimage);
-        }
-    	supprMatrice(&mat);
-    }
-    supprMatrice(&matcomp);
-    return res;
-}
-
-
-
-int main()
-{
-    char chemin[taillechemin] = "base_de_donnee";
-    char fichierBD[taillechemin] = "base_de_donnee.txt";
+    // Variable et chaine de caractere
+    char cheminBD[taillechemin] = "base_de_donnee/";
+    char fichierBD[taillechemin] = "base_de_donnee.txt";   // Nom du fichier text contenant les informations de la base de donnee
+    char com; // Commande utilisateur [o]/[n]
 
     /* Controle du nom de la base de donnee */
 
@@ -288,118 +21,140 @@ int main()
     }
 
     /** Partie creartion base de donnee */
-    printf(" -- Souhaitez vous mettre a jour la base de donnee ? [o]/[n] -> ");
-    char com1;
-    while(1){               // Boucle tant que l'utilisateur n'a pas mit une commande valide
-        scanf(" %c", &com1);  // Prend la commande utilisateur
 
-        if (com1 == 'o'){      // Si l'utilisateur veut creer une base de donnee
+    printf("\n\t----- Partie creation de base de donnee ----- \n\n");
+    while(1){               // Boucle tant que l'utilisateur n'a pas mit une commande valide
+        printf(" -- Souhaitez vous mettre a jour la base de donnee ? [o]/[n] -> ");
+        char com;
+        scanf(" %c", &com);  // Prend la commande utilisateur
+
+        if (com == 'o'){      // Si l'utilisateur veut creer une base de donnee
             DIR* rep = NULL;
-            parcourirDossier(rep, chemin, fichierBD);
+            parcourirDossier(rep, cheminBD, fichierBD);
             closedir(rep);
             fflush(stdin);
-            printf(" -- La base de donnee a ete correctement cree  -- \n\n");
+            printf(" -- La base de donnee a ete correctement cree  -- \n");
             break;
-        }else if(com1 == 'n'){
+        }else if(com == 'n'){
             fflush(stdin);
             break;
         }
-        printf(" -- Veulliez donner une reponse valide : [o]/[n] -- \n");
+        printf(" -- Veulliez donner une reponse valide -- \n");
         fflush(stdin);
     }
 
-    /** Partie recuperation base de donne et comparaison */
+    /** Partie comparaison d'image */
 
-    BaseDonnee *bd = lectureBD(chemin, fichierBD);
+    printf("\n\t----- Partie comparaison d'image ----- \n\n");
 
-    char com2;
+    BaseDonnee *bd = lectureBD(cheminBD, fichierBD); // Recupere la base de donnee dans le fichier
     char fimg[taillechemin];  // Nom du fichier image a comparer
     while(1){               // Boucle tant que l'utilisateur n'a pas mit une commande valide
         printf(" -- Souhaitez vous comparer une image a la base de donnee ? [o]/[n] -> ");
-        scanf(" %c", &com2);  // Prend la commande utilisateur
+        scanf(" %c", &com);  // Prend la commande utilisateur
         fflush(stdin);
 
-        if (com2 == 'o'){      // Si l'utilisateur veut comparer une image
+        if (com == 'o'){      // Si l'utilisateur veut comparer une image
 
-	    char comp[taillechemin] = "comp/";
+
+            char chemincomp[taillechemin] = "comparaison/";   // Nom du dossier dans lequel se trouve les images a comparer
             printf(" -- Entrez le nom de l'image a comparer avec l'extension (.bmp) -> ");
             scanf("%s", fimg);
-	    strcat(comp, fimg);
-	    
+            strcat(chemincomp, fimg);                     // Contatanation
+
 
             // test si le fichier est bien dans le dossier
-            FILE* test = fopen(comp, "rb");
+            FILE* test = fopen(chemincomp, "rb");
 
             // Si le fichier n'est pas dans le dossier renvoie un message d'erreur et reboucle
             if(test == NULL) {
+                fclose(test);
                 printf(" -- Ce fichier n'est pas present dans la dossier -- \n");
-		return 1;
             }
             else {
                 fclose(test);  // ferme le fichier de verification
-                char* res = compare_img_BD(bd, comp);   // Prend l'image la plus proche de la base de donnee
+                char* res = compare_img_BD(bd, chemincomp);   // Prend l'image la plus proche de la base de donnee
                 strcpy(res,strrchr(res,'/')+1);         // Enleve la partie du nom de l'image sur le chemin du dossier
-                printf(" -- L'image la plus proche dans la base de donnee est : %s -- \n\n", res);
+                printf(" -- L'image la plus proche dans la base de donnee est : %s -- \n", res);
                 free(res);   // Supprime la chaine de caractere car alloue dynamiquement dans compare_img_BD
             }
 
-        }else if(com2 == 'n'){
+        }else if(com == 'n'){
             fflush(stdin);
-				
+
             break;
         }else{
             printf(" -- Veulliez donner une reponse valide -- \n");
             fflush(stdin);
         }
-	
-	
-    
-
-    char com3;
-    while(1) {
-    	printf(" -- Voulez vous reconstruire votre image ? [o]/[n] -> ");
-	scanf(" %c", &com3);
-	fflush(stdin);
-	if(com3 == 'o') {
-	    printf(" -- Veuillez patientez pendant la reconstruction de votre image... -- \n");	
-	    char rec[taillechemin] = "REC/reconstruction"; //Debut du nom de l'image reconstruite
-	    char comp[taillechemin] = "comp/";		   // Lien vers l'image comparée
-	    strcat(comp, fimg);
-	    BmpImg orig = readBmpImage(comp);		   // Lecture image
-     	    BmpImg pic = createBmpImg("reconstruction", orig.dimX, orig.dimY); //Création image de meme taille
-	    Matrice mat = mom_legendre (&orig, N);	   // Calcul moments
-	    Matrice coef = coefLegendre(N);		   // Calculs coefficients Legendre
-   	    freeBmpImg(&orig);			           // Désallocation Image lue
-	    reconstruction_image(mat, &pic, coef);         // Reconstruction
-	    supprMatrice (&mat);			   // Désallocation Matrice Moment
-	    supprMatrice (&coef);			   // Désallocation Matrice coef
-	    writeBmpImage(strcat(rec, fimg), &pic);	   // Ecriture de l'image reconstruite
-	    freeBmpImg(&pic);				   // Désallocation image reconstruite
-	    printf(" -- Votre image a été reconstruite, vous pouvez la trouver dans le répértoire REC/ --\n");
-	    break;
-		
-
-	}else if(com3 == 'n') {
-	    fflush(stdin);
-	    break;
-	}
-	else {
-	    printf("-- Veuillez donner une réponse valide --\n"); 	
-	    fflush(stdin);
-	}
-
-
     }
+
+    /** Partie reconstruction d'image */
+
+    printf("\n\t----- Partie reconstruction d'image ----- \n\n");
+
+    while(1){               // Boucle tant que l'utilisateur n'a pas mit une commande valide
+        printf(" -- Souhaitez vous reconstruire une image de la base de donnee ? [o]/[n] -> ");
+        scanf(" %c", &com);  // Prend la commande utilisateur
+        fflush(stdin);
+
+        if (com == 'o'){      // Si l'utilisateur veut comparer une image
+
+            char cheminrec[taillechemin] = "reconstruction/";  // Nom du dossier dans lequel se trouverons les images reconstruite
+            afficheimgBD(bd);
+            printf(" -- Voici les images de la base de donnee --\n");
+            printf(" -- Entrez le nom de l'image que vous souhaitez reconstruire avec l'extension (.bmp)\n    ou entrez 'TOUT' pour reconstruire toutes les images (prend du temps) -> ");
+            scanf("%s", fimg);
+
+            if(strcmp(fimg, "TOUT") == 0){ // Si l'utilisateur veut reconstruire toutes les images
+                reconstruction_BD(bd, cheminrec, tailleimg, tailleimg);
+            }else{
+
+                char ftxt[taillechemin];  // Initialise le nom du fichier text de la matrice des moment de Legendre
+                strcpy(ftxt, fimg);       // Prend copie le nom de l'image dans la variable du nom de fichier text
+
+                // Si le fichier n'est pas un fichier bmp
+                if (bmptotxt(ftxt) == 0){  // Converti le nom .bmp en nom .txt
+                    printf(" -- L'image donnee n'est pas un fichier bmp --\n");
+
+                }else{
+
+                    char fimgrec[taillechemin] = "reconstruction_";  // Initialisation du nom de l'image reconstruite
+                    strcat(fimgrec, fimg);
+
+                    char tmp[taillechemin];           // Chaine de caractere temporaire pour le nom du fichier txt avec chemin
+                    strcpy(tmp, cheminBD);
+                    strcat(tmp, ftxt);
+                    strcpy(ftxt, tmp);
+
+                    FILE* test = fopen(ftxt, "r"); // test si le fichier est bien dans le dossier
+
+                    // Si le fichier n'est pas dans le dossier renvoie un message d'erreur et reboucle
+                    if(test == NULL) {
+                        fclose(test);
+                        printf(" -- Le fichier n'est pas present dans la base de donnee -- \n");
+                    }
+                    else {
+                        fclose(test);  // ferme le fichier de verification
+
+                        Matrice mat = lectureMatrice(ftxt);  // Prend la matrice
+                        creation_image(mat, cheminrec, fimgrec, tailleimg, tailleimg);  // Cree l'image demande
+                        supprMatrice(&mat);     // Supprime la matrice utilise pour creer l'image
+                    }
+                }
+            }
+
+        }else if(com == 'n'){
+            fflush(stdin);
+            break;
+        }else{
+            printf(" -- Veulliez donner une reponse valide -- \n");
+            fflush(stdin);
+        }
     }
-			
 
+    suprimeBD(bd);
 
-    	suprimeBD(bd);
-
-
-    printf(" - Fin de programme -\n");
+    printf("\n\t- Fin de programme -\n");
     return 0;
 }
-
-
-

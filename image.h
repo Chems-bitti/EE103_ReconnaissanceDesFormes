@@ -2,14 +2,10 @@
 #define _image_h_
 
 // Bibliotheques
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include "calcul.h"
 #include "gestionfichier.h"
 
 
-// Marche nickel
 /** Reconstruit un pixel de coordonnee (x,y) a partir d'une Matrice de moment de Legendre
   * @param x coordonnee en abscisse
   * @param y coordonnee en ordonnee
@@ -21,7 +17,6 @@
 unsigned char reconstruction_pixel(int x, int y, Matrice mat, Matrice coef, int dimX, int dimY);
 
 
-// Marche nickel
 /** Reconstruit une image de coordonnee (x,y) a partir d'une Matrice de moment de Legendre et d'une image bmp
   * @param mat Matrice de moment de Legendre
   * @param *pic image que l'on va reconstruire
@@ -29,6 +24,8 @@ unsigned char reconstruction_pixel(int x, int y, Matrice mat, Matrice coef, int 
   */
 void reconstruction_image(Matrice mat, BmpImg* pic, Matrice coef);
 
+
+void creation_image(Matrice mat, char* dossier, char *nom, int tailleX, int tailleY);
 
 
 #endif

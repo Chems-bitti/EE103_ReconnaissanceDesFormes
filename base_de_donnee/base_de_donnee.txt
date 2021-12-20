@@ -1,0 +1,5 @@
+Nombre d'image : 4
+base_de_donnee/avion.bmp	base_de_donnee/avion.txt
+base_de_donnee/voiture.bmp	base_de_donnee/voiture.txt
+base_de_donnee/tank.bmp	base_de_donnee/tank.txt
+base_de_donnee/carre.bmp	base_de_donnee/carre.txt

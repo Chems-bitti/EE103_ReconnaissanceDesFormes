@@ -33,3 +33,20 @@ void reconstruction_image(Matrice mat, BmpImg* pic, Matrice coef){
         }
     }
 }
+
+
+void creation_image(Matrice mat, char* dossier, char *nom, int tailleX, int tailleY){
+
+    printf(" -- Veuillez patientez pendant la reconstruction de l'image... -- \n");
+
+    BmpImg pic = createBmpImg(nom, tailleX, tailleY); //Creation image
+    Matrice coef = coefLegendre(Ordre);		   // Calculs coefficients Legendre
+    reconstruction_image(mat, &pic, coef);         // Reconstruction
+    supprMatrice (&coef);			   // Desallocation Matrice coef
+    char tmp[taillechemin];             // Chaine temporaire pour prendre le nom du fichier et du dossier
+    strcpy(tmp, dossier);               // tmp prend le nom du dossier
+    writeBmpImage(strcat(tmp, nom), &pic);	   // Ecriture de l'image reconstruite
+    freeBmpImg(&pic);				   // Desallocation image reconstruite
+
+    printf(" -- '%s' disponnible dans le repertoire '%s' --\n", nom, dossier);
+}

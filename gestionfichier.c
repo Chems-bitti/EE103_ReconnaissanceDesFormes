@@ -1,5 +1,57 @@
 #include "gestionfichier.h"
 
+int isDir(char* s)
+{
+    if ((strchr(s, '.')) == NULL) /* Si le nom du chemin n'a pas de point (une extension). */
+        return 1;
+    else
+        return 0;
+}
+
+int isbmp(char* s){
+
+    /* Si le fichier n'a pas d'extension (premier test pour evite les erreurs) */
+    if (isDir(s)){
+        return 0;
+    }
+    int len = strlen(s);
+    if ((s[len-3] == 'b') && (s[len-2] == 'm') && (s[len-1] == 'p')){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+int istxt(char* s){
+
+    /* Si le fichier n'a pas d'extension (premier test pour evite les erreurs) */
+    if (isDir(s)){
+        return 0;
+    }
+    int len = strlen(s);
+    if ((s[len-3] == 't') && (s[len-2] == 'x') && (s[len-1] == 't')){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+int bmptotxt(char* s){
+    /* si le fichier n'est pas un bmp */
+    if (isbmp(s) == 0){
+        return 0;
+    }else{
+        /* Prend le pointeur vers '.' */
+        char *temp = strchr(s, '.');
+
+        /* Remplace les 3 carateres suivant */
+        temp[1] = 't';
+        temp[2] = 'x';
+        temp[3] = 't';
+        return 1;
+    }
+}
+
 void ecritureMatrice(char * fname, Matrice mat){
 
 	FILE* f = fopen(fname, "w");				// Ouverture du fichier
@@ -89,5 +141,34 @@ Matrice lectureMatricebin(char *nomfichierbin){
         // Fermeture du fichier
         fclose(fbin);
         return mat;
+    }
+}
+
+
+void lire(char* s)
+{
+    char *enter = NULL;
+    char temp[100] = ""; /* Chaine de caracteres temporaire contenant la saisie de l'utilisateur. */
+
+    fgets(temp, 99, stdin);
+
+    enter = strchr(temp, '\n');
+    if (enter != NULL)
+        *enter = '\0';
+
+    strcat(s, temp); /* On ajoute a la suite le nom du dossier */
+}
+
+
+void lirebmpDossier(char* s, DIR* rep)
+{
+    struct dirent* ent = NULL;
+
+    printf(" -- Lecture des images bmp du dossier '%s' -- \n", s);
+
+    while ((ent = readdir(rep)) != NULL){ /* Lecture du dossier. */
+        if (isbmp(ent->d_name)){
+            printf(" -> %s\n", ent->d_name);
+        }
     }
 }

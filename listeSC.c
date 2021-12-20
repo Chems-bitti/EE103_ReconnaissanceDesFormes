@@ -167,7 +167,7 @@
 			pRem->next = NULL;
 			// On libere l'espace memoire occupe par pRem
 			freeData( pRem->data );	// les donnees
-			free( pRem->data);		// le pointeur vers les donnees
+			free( pRem->data );		// le pointeur vers les donnees
 			free( pRem );			// le pointeur vers la maille
 			// On decremente le nombre de points dans la liste
 			liste->length--;

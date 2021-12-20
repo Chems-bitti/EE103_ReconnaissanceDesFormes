@@ -6,7 +6,9 @@
 #include <stdlib.h>
 #include <math.h>
 
-// d�claration de la structure Matrice
+#define Ordre 45   // Ordre des matrices de moment de Legendre
+
+// declaration de la structure Matrice
 typedef struct {
     int N;              // Ordre de la Matrice
     double **tab;        // Tableau avec les valeurs de la matrice
@@ -25,7 +27,7 @@ Matrice creerMatrice(int N);
 void supprMatrice(Matrice *mat);
 
 /** Affiche le contenu d'une Matrice
-  * Les deux premiers entier sont pour le num�ro et l'ordre de la matrice, le tableau en deux dimension pour les valeurs
+  * Les deux premiers entier sont pour le numero et l'ordre de la matrice, le tableau en deux dimension pour les valeurs
   * @param mat La matrice a afficher
   */
 void afficheMatrice(Matrice mat);
