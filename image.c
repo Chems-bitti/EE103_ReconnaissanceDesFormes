@@ -36,7 +36,7 @@ void reconstruction_image(Matrice mat, BmpImg* pic, Matrice coef){
 
 void creation_image(Matrice mat, char* dossier, char *nom, int tailleX, int tailleY){
 
-    printf(" -- Veuillez patientez pendant la reconstruction de l'image... -- \n");
+    printf(" -- Veuillez patienter pendant la reconstruction de l'image... -- \n");
 
     BmpImg pic = createBmpImg(nom, tailleX, tailleY); //Creation image
     Matrice coef = coefLegendre(Ordre);		   // Calculs coefficients Legendre

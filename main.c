@@ -30,10 +30,19 @@ int main(){
 
         if (com == 'o'){      // Si l'utilisateur veut creer une base de donnee
             DIR* rep = NULL;
-            parcourirDossier(rep, cheminBD, fichierBD);
-            closedir(rep);
-            fflush(stdin);
-            printf(" -- La base de donnee a ete correctement cree  -- \n");
+            if (parcourirDossier(rep, cheminBD, fichierBD)){
+                // Si la base de donnee a ete cree correctement
+                closedir(rep);
+                fflush(stdin);
+                printf(" -- La base de donnee a ete correctement cree  -- \n");
+            }else{
+                closedir(rep);
+                fflush(stdin);
+                printf(" -- Attention ! Il n'y a pas d'image dans la base de donnee  -- \n");
+                printf(" -- La comparaison et la reconstruction d'image sera donc impossible  -- \n");
+                // Appel de la fonction main pour que l'utilisateur puisse re mettre a jour la base de donnee
+                main();
+            }
             break;
         }else if(com == 'n'){
             fflush(stdin);
@@ -48,6 +57,24 @@ int main(){
     printf("\n\t----- Partie comparaison d'image ----- \n\n");
 
     BaseDonnee *bd = lectureBD(cheminBD, fichierBD); // Recupere la base de donnee dans le fichier
+    /* Test si la base de donnee a pu etre lu */
+    if (bd == NULL){
+        printf(" -- La base de donnee n'a pas pu etre lu --\n");
+        printf(" -- Impossible de comparer ou de reconstruire une image --\n");
+        printf(" -- Entrez n'importe quelle caractere pour mettre fin au programmme -> ");
+        scanf(" %c", &com);
+        return 0;
+    }
+    /* Test si il y a des images dans la base de donnee */
+    if (bd->nbimage == 0){
+        printf(" -- La base ne contient aucune image --\n");
+        printf(" -- Impossible de comparer ou de reconstruire une image --\n");
+        printf(" -- Entrez n'importe quelle caractere pour mettre fin au programmme -> ");
+        scanf(" %c", &com);
+        suprimeBD(bd);
+        return 0;
+    }
+
     char fimg[taillechemin];  // Nom du fichier image a comparer
     while(1){               // Boucle tant que l'utilisateur n'a pas mit une commande valide
         printf(" -- Souhaitez vous comparer une image a la base de donnee ? [o]/[n] -> ");

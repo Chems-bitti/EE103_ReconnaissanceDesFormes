@@ -99,7 +99,7 @@ BaseDonnee* creerBDmoment(DIR* rep, char* chemin, char* nomBD){
 }
 
 
-void parcourirDossier(DIR* rep, char* chemin, char* nombd){
+int parcourirDossier(DIR* rep, char* chemin, char* nombd){
 
     if (!isDir(chemin))
     {
@@ -123,10 +123,12 @@ void parcourirDossier(DIR* rep, char* chemin, char* nombd){
     rep = opendir(chemin);
     BaseDonnee* bd = creerBDmoment(rep, chemin, nombd);
     ecritureBD(bd, chemin);  // Ecrit la base de donnee dans un fichier txt
+    int nbimg = bd->nbimage; // Prend le nombre d'image de la base de donnee
 
     suprimeBD(bd);  // Supprime la base de donnee
-
     closedir(rep); // Fermeture du repertoire
+
+    return nbimg;
 
     /* A utiliser si on veut faire un parcour de dossier dynamique pour l'itilisateur
        Quelques modifications a apporter pour cela */
@@ -166,9 +168,8 @@ BaseDonnee* lectureBD(char *chemin, char *nomfbd){
     FILE* ftxt = fopen(fichiertemp, "r");
     if (ftxt == NULL){
         printf(" -- Le fichier '%s' n'a pas pu etre ouvert --\n", fichiertemp);
-        printf(" -- La base de donnee n'a pas pu etre lu --\n");
         fclose(ftxt);
-        return creerBD(nomfbd);
+        return NULL;
     }else{
 
         char fichierbmp[taillechemin];

@@ -74,8 +74,9 @@ BaseDonnee* creerBDmoment(DIR* rep, char* chemin, char* nomBD);
   * @param rep repertoire ou se fait la lecture (Le repertoir est en parametre car utile pour la recursivite)
   * @param chemin ou se trouve le repertoire/dossier de la base de donnee (la ou les images sont)
   * @param nomBD nom de la base de donnee
+  * @return le nombre d'image utilise pour la base de donnee
   */
-void parcourirDossier(DIR* rep, char* chemin, char* nombd);
+int parcourirDossier(DIR* rep, char* chemin, char* nombd);
 
 
 /** Ecrit une base de donnee dans un fichier text dans le dossier de la base de donnee
