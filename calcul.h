@@ -7,11 +7,12 @@
 
 
 /** Calcule la distance euclidienne entre deux matrice de moment
-* @param mat1 la premier matrice
-* @param mat2 la deuxieme matrice
-* @return La distance euclidienne des deux matrices
-*/
+  * @param mat1 la premier matrice
+  * @param mat2 la deuxieme matrice
+  * @return La distance euclidienne des deux matrices
+  */
 double distance_euclidienne(Matrice mat1, Matrice mat2, int ordre);
+
 
 /** Calcul la base de Legendre
   * @param x la variable en base de legendre
@@ -19,6 +20,7 @@ double distance_euclidienne(Matrice mat1, Matrice mat2, int ordre);
   * @return La valeur de x dans la base de Legendre d'ordre n
   */
 double base_legendre(double x, int n, Matrice coef);
+
 
 /** Calcul coefLegendre
   * @param int n : ordre du polynome
@@ -34,18 +36,19 @@ Matrice coefLegendre(int n);
   */
 Matrice momcentre(BmpImg* pic, int n);
 
-/* Calcul des moments geometriques
- * @param BmpImg* pic : Pointeur vers l'image BMP
- * @param int n : ordre des moments
- * @return double** mat : matrice des moments geometriques
- */
+/** Calcul des moments geometriques
+  * @param BmpImg* pic : Pointeur vers l'image BMP
+  * @param int n : ordre des moments
+  * @return double** mat : matrice des moments geometriques
+  */
 Matrice mom(BmpImg* pic, int n);
 
-/* Calcul des moments de Legendre
- * @param BmpImg* pic : Pointeur vers l'image BMP
- * @param int n : ordre des moments
- * @return double** mat : matrice des moments de Legendre
- */
+
+/** Calcul des moments de Legendre
+  * @param BmpImg* pic : Pointeur vers l'image BMP
+  * @param int n : ordre des moments
+  * @return double** mat : matrice des moments de Legendre
+  */
 Matrice mom_legendre(BmpImg* pic, int n);
 
 

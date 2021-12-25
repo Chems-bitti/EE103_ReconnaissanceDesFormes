@@ -1,5 +1,6 @@
 #include "base2donnee.h"
 
+
 // Fonction de base pour la manipulation des elements de la gestion de donnee
 BaseDonnee* creerBD(char* nom){
 
@@ -11,6 +12,7 @@ BaseDonnee* creerBD(char* nom){
     bd->listeimage = creerListe(sizeof(ImageBD));
     return bd;
 }
+
 
 ImageBD* creerImageBD(char* nomfimage, char* nomfmatrice){
 
@@ -47,8 +49,6 @@ void suprimeBD(BaseDonnee* bd){
     free(bd->nom);
     free(bd);
     bd = NULL;
-
-
 }
 
 
@@ -59,7 +59,7 @@ void suprimeImageBD(ImageBD* imgbd){
 }
 
 
-BaseDonnee* creerBDmoment(char* s, DIR* rep, char* nomBD){
+BaseDonnee* creerBDmoment(DIR* rep, char* chemin, char* nomBD){
     struct dirent* ent = NULL;
 
     char fichiertxt[taillechemin];              // Itinieraire vers le fichier
@@ -67,17 +67,17 @@ BaseDonnee* creerBDmoment(char* s, DIR* rep, char* nomBD){
     char nomtxt[25];                   // Nom du fichier txt de la matrice de moment
     BaseDonnee* bd = creerBD(nomBD);    // Creer une base de donnee pour lister les images et leur matrice de moment
 
-    while ((ent = readdir(rep)) != NULL){ /* Lecture du dossier. */
+    while ((ent = readdir(rep)) != NULL){ // Lecture du dossier
         if (isbmp(ent->d_name)){
             /* Partie base de donnee et memoir */
             // prend l'itineraire vers le fichier image
-            strcpy(fichierbmp, s);       // prend l'itineraire vers le repertoir ou se trouve l'image
+            strcpy(fichierbmp, chemin);       // prend l'itineraire vers le repertoir ou se trouve l'image
             strcat(fichierbmp, ent->d_name); // ajoute le nom de l'image
 
             // prend l'itineraire vers le fichier text
             strcpy(nomtxt, ent->d_name);     // prend le nom du fichier bmp
             bmptotxt(nomtxt);                // change l'extension de bmp a txt
-            strcpy(fichiertxt, s);       // prend l'itineraire vers le repertoir ou se trouvera le fichier text
+            strcpy(fichiertxt, chemin);       // prend l'itineraire vers le repertoir ou se trouvera le fichier text
             strcat(fichiertxt, nomtxt); // ajoute le nom du fichier text
 
             ImageBD* img = creerImageBD(fichierbmp, fichiertxt);
@@ -98,6 +98,7 @@ BaseDonnee* creerBDmoment(char* s, DIR* rep, char* nomBD){
     return bd;
 }
 
+
 void parcourirDossier(DIR* rep, char* chemin, char* nombd){
 
     if (!isDir(chemin))
@@ -105,7 +106,6 @@ void parcourirDossier(DIR* rep, char* chemin, char* nombd){
         printf("%s n'est pas un dossier", chemin);
         exit(-1);
     }
-
     rep = opendir(chemin);
 
     if (rep == NULL)
@@ -114,23 +114,24 @@ void parcourirDossier(DIR* rep, char* chemin, char* nombd){
         exit(-1);
     }
 
-    lirebmpDossier(chemin, rep); /* Lecture... */
-    closedir(rep); /* Fermeture du repertoire. */
+    lirebmpDossier(chemin, rep); // Lecture..
+    closedir(rep); // Fermeture du repertoire, pour que la prochaine lecture se fasse du debut
 
     printf(" -- Voici les images qui seront incluses dans la base de donnee (calcul en cours) -- \n");
 
 
     rep = opendir(chemin);
-    BaseDonnee* bd = creerBDmoment(chemin, rep, nombd);
+    BaseDonnee* bd = creerBDmoment(rep, chemin, nombd);
     ecritureBD(bd, chemin);  // Ecrit la base de donnee dans un fichier txt
 
     suprimeBD(bd);  // Supprime la base de donnee
 
-    closedir(rep); /* Fermeture du repertoire. */
+    closedir(rep); // Fermeture du repertoire
 
-    /* A utiliser si on veut faire un parcour de dossier dynamique pour l'itilisatuer */
-    //lire(chemin); /* Lecture du nouveau chemin; */
-    //parcourirDossier(rep, chemin); /* On rappelle la fonction parcourirDossier (recursivite). */
+    /* A utiliser si on veut faire un parcour de dossier dynamique pour l'itilisateur
+       Quelques modifications a apporter pour cela */
+    //lire(chemin); (Lecture du nouveau chemin)
+    //parcourirDossier(rep, chemin, char* nombd); On rappelle la fonction parcourirDossier (recursivite).
 }
 
 
@@ -245,6 +246,7 @@ void afficheimgBD(BaseDonnee *bd){
     }
 }
 
+
 void reconstruction_BD(BaseDonnee *bd, char* dossier, int tailleX, int tailleY){
 
     printf(" -- Debut de la reconstruction des images de la base de donnee -- \n");
@@ -263,6 +265,4 @@ void reconstruction_BD(BaseDonnee *bd, char* dossier, int tailleX, int tailleY){
     }
     printf(" -- Toutes les images de la base de donnee on ete reconstruite -- \n");
 }
-
-
 

@@ -17,15 +17,11 @@ Matrice mom(BmpImg* pic, int n) {
 					if(getPixel(*pic, x,y) != 0)	// V�rification que le pixel est non nul
 						mat.tab[p][q] += pow(x,p)*pow(y,q);	// somme
 				}
-
-
 			}
 		}
-
 	}
 	return mat;
 }
-
 
 
 Matrice momcentre(BmpImg* pic, int n) {
@@ -55,7 +51,6 @@ Matrice momcentre(BmpImg* pic, int n) {
 						 */
 						else {
 							eta.tab[p][q]+= (pow(x-x1,p)*pow(y-y1,q))/(pow(abs(omega),(p+q+1)/2.)*sqrt(abs(omega)));
-
 						}
 					}
 				}
@@ -68,8 +63,6 @@ Matrice momcentre(BmpImg* pic, int n) {
 }
 
 
-
-
 double base_legendre(double x, int n, Matrice coef){
     double res=0;
     for(int i=0; i<=n; i++){
@@ -77,6 +70,7 @@ double base_legendre(double x, int n, Matrice coef){
     }
     return res;
 }
+
 
 Matrice coefLegendre(int n) {
 	Matrice an = creerMatrice(n);
@@ -95,7 +89,6 @@ Matrice coefLegendre(int n) {
     	}
     	return an;
 }
-
 
 
 Matrice mom_legendre(BmpImg* pic, int n) {
@@ -120,8 +113,6 @@ Matrice mom_legendre(BmpImg* pic, int n) {
 }
 
 
-
-
 double distance_euclidienne(Matrice mat1, Matrice mat2, int ordre){
 
     int p,q;
@@ -139,6 +130,5 @@ double distance_euclidienne(Matrice mat1, Matrice mat2, int ordre){
     }
     return sqrt(res);							//On retourne la racine de la somme
 }
-
 
 

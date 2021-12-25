@@ -14,6 +14,7 @@ typedef struct {
     double **tab;        // Tableau avec les valeurs de la matrice
 } Matrice;
 
+
 /** Creation d'une matrice
   * @param num numero de la matrice
   * @param N ordre de la matrice
@@ -21,10 +22,12 @@ typedef struct {
   */
 Matrice creerMatrice(int N);
 
+
 /** Suppression d'une matrice
   * @param *mat adresse de la matrice a supprimer
   */
 void supprMatrice(Matrice *mat);
+
 
 /** Affiche le contenu d'une Matrice
   * Les deux premiers entier sont pour le numero et l'ordre de la matrice, le tableau en deux dimension pour les valeurs

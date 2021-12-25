@@ -11,7 +11,6 @@
 #define taillenomfichier 60
 
 
-
 // déclaration de la structure ImageBD
 typedef struct {
     char* nomfimage;        // Nom du fichier image
@@ -61,24 +60,59 @@ void suprimeBD(BaseDonnee* bd);
 void suprimeImageBD(ImageBD* imgbd);
 
 
-BaseDonnee* creerBDmoment(char* s, DIR* rep, char* nomBD);
+/** Cree les moments de toutes les images bmp d'un dossier
+  * @param rep repertoire ou sont les images
+  * @param chemin ou se trouve le repertoire/dossier de la base de donnee (la ou les images sont)
+  * @param nomBD nom de la base de donnee
+  * @return la base de donnee contenant la liste chaine des images
+  */
+BaseDonnee* creerBDmoment(DIR* rep, char* chemin, char* nomBD);
 
 
+/** Liste les images .bmp du dossier de la base de donnee, cree les moments de legendre des images
+    et ecrit la base de donnee dans un fichier txt
+  * @param rep repertoire ou se fait la lecture (Le repertoir est en parametre car utile pour la recursivite)
+  * @param chemin ou se trouve le repertoire/dossier de la base de donnee (la ou les images sont)
+  * @param nomBD nom de la base de donnee
+  */
 void parcourirDossier(DIR* rep, char* chemin, char* nombd);
 
 
+/** Ecrit une base de donnee dans un fichier text dans le dossier de la base de donnee
+    ce fichier text sera utiliser pour la comparaison et la reconstruction d'image
+  * @param bd la base de donnee a ecrire
+  * @param chemin ou sera ecrit la base de donnee
+  */
 void ecritureBD(BaseDonnee* bd, char* chemin);
 
 
+/** Lit la base de donnee
+  * @param chemin de la base de donnee
+  * @param nomfbd fichier .txt est ecrit la base de donnee
+  */
 BaseDonnee* lectureBD(char *chemin, char *nomfbd);
 
 
+/** Comapare une image a une base de donnee
+  * @param bd la base de donnee
+  * @param fimg nom du ficher .bmp de l'image
+  * @return Le nom de l'image la plus proche
+  */
 char *compare_img_BD(BaseDonnee *bd, char* fimg);
 
 
+/** Affiche dans la console toutes les images d'une base de donnee
+  * @param bd la base de donnee
+  */
 void afficheimgBD(BaseDonnee *bd);
 
 
+/** Reconstruit toutes le images d'une base de donnee
+  * @param bd la base de donnee
+  * @param dossier ou seront les images reconstruites
+  * @param tailleX Taille horizontal des images reconstruite
+  * @param tailleY Taille vertical des images reconstruite
+  */
 void reconstruction_BD(BaseDonnee *bd, char* dossier, int tailleX, int tailleY);
 
 #endif

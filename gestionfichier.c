@@ -1,15 +1,15 @@
 #include "gestionfichier.h"
 
-int isDir(char* s)
-{
-    if ((strchr(s, '.')) == NULL) /* Si le nom du chemin n'a pas de point (une extension). */
+
+int isDir(char* s){
+    if ((strchr(s, '.')) == NULL) // Si le nom du chemin n'a pas de point (une extension)
         return 1;
     else
         return 0;
 }
 
-int isbmp(char* s){
 
+int isbmp(char* s){
     /* Si le fichier n'a pas d'extension (premier test pour evite les erreurs) */
     if (isDir(s)){
         return 0;
@@ -22,8 +22,8 @@ int isbmp(char* s){
     }
 }
 
-int istxt(char* s){
 
+int istxt(char* s){
     /* Si le fichier n'a pas d'extension (premier test pour evite les erreurs) */
     if (isDir(s)){
         return 0;
@@ -35,6 +35,7 @@ int istxt(char* s){
         return 0;
     }
 }
+
 
 int bmptotxt(char* s){
     /* si le fichier n'est pas un bmp */
@@ -52,10 +53,11 @@ int bmptotxt(char* s){
     }
 }
 
+
 void ecritureMatrice(char * fname, Matrice mat){
 
 	FILE* f = fopen(fname, "w");				// Ouverture du fichier
-	if(f == NULL) {						// V�rification que le fichier � �t� ouvert correctement
+	if(f == NULL) {						// Verification que le fichier a ete ouvert correctement
 		printf("Erreur: Impossible d'ouvrir le fichier");
 		exit(1);
 	}
@@ -64,16 +66,17 @@ void ecritureMatrice(char * fname, Matrice mat){
 		for(int j = 0; j <= mat.N-i; j++) {
 				fprintf(f,"%le\t", mat.tab[i][j]);	// Ecriture du terme
 		}
-		fprintf(f,"\n");				// Retour � la ligne
+		fprintf(f,"\n");				// Retour a la ligne
 	}
 	fclose(f);
 
 }
 
+
 Matrice lectureMatrice(char * nomfichier){
 	int dim;
 	FILE* f = fopen(nomfichier, "r");				// Ouverture du fichier
-	if(f == NULL) {						// V�rification que le fichier � �t� ouvert correctement
+	if(f == NULL) {						// Verification que le fichier a ete ouvert correctement
 		printf("Erreur: Impossible d'ouvrir le fichier");
 		exit(1);
 	}
@@ -89,6 +92,7 @@ Matrice lectureMatrice(char * nomfichier){
 	return mat;
 }
 
+
 int ecritureMatricebin(char *nomfichierbin, Matrice mat){
 
     FILE *fbin = fopen(nomfichierbin, "wb");
@@ -99,7 +103,7 @@ int ecritureMatricebin(char *nomfichierbin, Matrice mat){
         return 0;
     }else{
 
-        fwrite ( &mat.N , sizeof (int) , 1 , fbin );                                // Ecrit l'ordre de la matrice
+        fwrite ( &mat.N , sizeof (int) , 1 , fbin );         // Ecrit l'ordre de la matrice
 
 	/*
         int q;
@@ -114,6 +118,7 @@ int ecritureMatricebin(char *nomfichierbin, Matrice mat){
         return 1;
     }
 }
+
 
 Matrice lectureMatricebin(char *nomfichierbin){
 
@@ -130,7 +135,7 @@ Matrice lectureMatricebin(char *nomfichierbin){
 
         Matrice mat = creerMatrice(N);
 
-	/*
+        /*
         int q;
         for (q = 0; q <=mat.N; q++){
             fread ( &mat.tab[q] , sizeof (double) , mat.N+1 , fbin );    // Lit la matrice ligne par ligne
@@ -145,8 +150,7 @@ Matrice lectureMatricebin(char *nomfichierbin){
 }
 
 
-void lire(char* s)
-{
+void lire(char* chemin){
     char *enter = NULL;
     char temp[100] = ""; /* Chaine de caracteres temporaire contenant la saisie de l'utilisateur. */
 
@@ -156,15 +160,14 @@ void lire(char* s)
     if (enter != NULL)
         *enter = '\0';
 
-    strcat(s, temp); /* On ajoute a la suite le nom du dossier */
+    strcat(chemin, temp); /* On ajoute a la suite le nom du dossier */
 }
 
 
-void lirebmpDossier(char* s, DIR* rep)
-{
+void lirebmpDossier(char* chemin, DIR* rep){
     struct dirent* ent = NULL;
 
-    printf(" -- Lecture des images bmp du dossier '%s' -- \n", s);
+    printf(" -- Lecture des images bmp du dossier '%s' -- \n", chemin);
 
     while ((ent = readdir(rep)) != NULL){ /* Lecture du dossier. */
         if (isbmp(ent->d_name)){

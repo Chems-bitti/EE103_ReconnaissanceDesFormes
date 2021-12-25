@@ -1,5 +1,6 @@
 #include "matrice.h"
 
+
 Matrice creerMatrice(int N){
 
     Matrice mat = {N};
@@ -11,6 +12,7 @@ Matrice creerMatrice(int N){
     }
     return mat;
 }
+
 
 void supprMatrice(Matrice *mat){
 
@@ -24,6 +26,7 @@ void supprMatrice(Matrice *mat){
     }
     mat->N = 0;
 }
+
 
 void afficheMatrice(Matrice mat){
 

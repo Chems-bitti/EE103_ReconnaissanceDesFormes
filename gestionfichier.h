@@ -3,6 +3,7 @@
 
 // Bibliotheques
 #include <dirent.h>
+
 #include "matrice.h"
 
 
@@ -65,8 +66,17 @@ int ecritureMatricebin(char * nomfichierbin, Matrice mat);
   */
 Matrice lectureMatricebin(char * nomfichierbin);
 
-void lire(char* s);
 
-void lirebmpDossier(char* s, DIR* rep);
+/** Lit le nom du dossier donne par l'utilisateur dans la console
+  * @param chemin actuel ou se trouve l'utilisateur
+  */
+void lire(char* chemin);
+
+
+/** Affiche dans la console les images bmp dans un dossier
+  * @param chemin du dossier
+  * @param rep ou se trouve les images
+  */
+void lirebmpDossier(char* chemin, DIR* rep);
 
 #endif

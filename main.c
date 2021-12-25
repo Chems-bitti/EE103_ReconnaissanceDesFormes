@@ -1,6 +1,6 @@
 
 // Bibliotheque
-#include "base2donnee.h"
+#include "base2donnee.h" // Seul cette bibliotheque est appele car elle appel toutes les autres
 
 
 #define tailleimg 100  // Taille des images a reconstruire (plus elle sont grande plus ca prend du temps)
@@ -55,13 +55,10 @@ int main(){
         fflush(stdin);
 
         if (com == 'o'){      // Si l'utilisateur veut comparer une image
-
-
             char chemincomp[taillechemin] = "comparaison/";   // Nom du dossier dans lequel se trouve les images a comparer
             printf(" -- Entrez le nom de l'image a comparer avec l'extension (.bmp) -> ");
             scanf("%s", fimg);
             strcat(chemincomp, fimg);                     // Contatanation
-
 
             // test si le fichier est bien dans le dossier
             FILE* test = fopen(chemincomp, "rb");
@@ -143,7 +140,6 @@ int main(){
                     }
                 }
             }
-
         }else if(com == 'n'){
             fflush(stdin);
             break;

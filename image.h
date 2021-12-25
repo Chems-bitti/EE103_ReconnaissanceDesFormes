@@ -25,6 +25,13 @@ unsigned char reconstruction_pixel(int x, int y, Matrice mat, Matrice coef, int 
 void reconstruction_image(Matrice mat, BmpImg* pic, Matrice coef);
 
 
+/** Creer et reconstruit une image
+  * @param mat Matrice de moment de Legendre
+  * @param dossier ou se trouvera l'image reconstruite
+  * @param nom de le l'image
+  * @param tailleX Taille horizontal de l'images reconstruite
+  * @param tailleY Taille vertical de l'images reconstruite
+  */
 void creation_image(Matrice mat, char* dossier, char *nom, int tailleX, int tailleY);
 
 
