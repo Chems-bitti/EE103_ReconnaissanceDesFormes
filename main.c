@@ -82,10 +82,22 @@ int main(){
         fflush(stdin);
 
         if (com == 'o'){      // Si l'utilisateur veut comparer une image
+
             char chemincomp[taillechemin] = "comparaison/";   // Nom du dossier dans lequel se trouve les images a comparer
+
+            DIR* repcomp = opendir(chemincomp);
+            /* Test si le dossier de comparaison existe */
+            if (repcomp == NULL){
+                printf("Le dossier '%s' n'a pas pu etre ouvert", chemincomp);
+                suprimeBD(bd);
+                exit(-1);
+            }
+            lirebmpDossier(chemincomp, repcomp); // Lecture..
+            closedir(repcomp);
+            printf(" -- Voici les images bmp disponible dans le dossier '%s' -- \n", chemincomp);
             printf(" -- Entrez le nom de l'image a comparer avec l'extension (.bmp) -> ");
             scanf("%s", fimg);
-            strcat(chemincomp, fimg);                     // Contatanation
+            strcat(chemincomp, fimg);            // Contatanation
 
             // test si le fichier est bien dans le dossier
             FILE* test = fopen(chemincomp, "rb");
