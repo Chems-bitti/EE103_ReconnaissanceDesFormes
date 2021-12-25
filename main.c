@@ -88,8 +88,9 @@ int main(){
             DIR* repcomp = opendir(chemincomp);
             /* Test si le dossier de comparaison existe */
             if (repcomp == NULL){
-                printf("Le dossier '%s' n'a pas pu etre ouvert", chemincomp);
+                printf(" -- Erreur : Le dossier '%s' n'a pas pu etre ouvert --\n", chemincomp);
                 suprimeBD(bd);
+                closedir(repcomp);
                 exit(-1);
             }
             lirebmpDossier(chemincomp, repcomp); // Lecture..
@@ -137,7 +138,17 @@ int main(){
         if (com == 'o'){      // Si l'utilisateur veut comparer une image
 
             char cheminrec[taillechemin] = "reconstruction/";  // Nom du dossier dans lequel se trouverons les images reconstruite
-            afficheimgBD(bd);
+            DIR* reprec = opendir(cheminrec);
+            /* Test si le dossier de reconstruction existe */
+            if (reprec == NULL){
+                printf(" -- Erreur : Le dossier '%s' n'a pas pu etre ouvert --\n", cheminrec);
+                closedir(reprec);
+                suprimeBD(bd);
+                exit(-1);
+            }
+            closedir(reprec);
+
+            afficheimgBD(bd);  // Affiche a l'utilisateur les images de la base de donnee
             printf(" -- Voici les images de la base de donnee --\n");
             printf(" -- Entrez le nom de l'image que vous souhaitez reconstruire avec l'extension (.bmp)\n    ou entrez 'TOUT' pour reconstruire toutes les images (prend du temps) -> ");
             scanf("%s", fimg);
