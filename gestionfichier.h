@@ -3,7 +3,7 @@
 
 // Bibliotheques
 #include <dirent.h>
-
+#include <string.h>
 #include "matrice.h"
 
 
