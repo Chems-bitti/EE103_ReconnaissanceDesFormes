@@ -2,8 +2,6 @@
 #define _base2donnee_h_
 
 // Bibliotheques
-#include <string.h>
-
 #include "image.h"
 #include "listeSC.h"
 

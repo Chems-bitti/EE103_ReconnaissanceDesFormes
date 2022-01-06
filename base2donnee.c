@@ -101,15 +101,13 @@ BaseDonnee* creerBDmoment(DIR* rep, char* chemin, char* nomBD){
 
 int parcourirDossier(DIR* rep, char* chemin, char* nombd){
 
-    if (!isDir(chemin))
-    {
+    if (!isDir(chemin)){
         printf("%s n'est pas un dossier", chemin);
         exit(-1);
     }
     rep = opendir(chemin);
 
-    if (rep == NULL)
-    {
+    if (rep == NULL){
         printf("Le dossier '%s' n'a pas pu etre ouvert", chemin);
         exit(-1);
     }
