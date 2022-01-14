@@ -9,10 +9,10 @@
 # Guide d'utilisation 
 ## Compilation
 Utiliser la commande suivante :
-Linux :
-	gcc \*.c -lm -o rec 
-Windows :
-	Utilisez code blocks
+### Linux :
+- gcc \*.c -lm -o rec 
+### Windows :
+- Utilisez code blocks
 
 ## Fonctionnement
 - Mettre les images que vous voulez ajouter à votre base de données dans le fichier "base\_de\_donnée"
