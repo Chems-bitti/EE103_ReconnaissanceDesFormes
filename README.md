@@ -15,13 +15,13 @@ Windows :
 	Utilisez code blocks
 
 ## Fonctionnement
-	- Mettre les images que vous voulez ajouter à votre base de données dans le fichier "base\_de\_donnée"
-	- Mettre les images que vous voulez comparer à votre base de données dans le fichier comparaison
-	- Exécuter le fichier
-	- Suivre les instructions 
+- Mettre les images que vous voulez ajouter à votre base de données dans le fichier "base\_de\_donnée"
+- Mettre les images que vous voulez comparer à votre base de données dans le fichier comparaison
+- Exécuter le fichier
+- Suivre les instructions 
 
 # Bucket list
-	- GUI
-	- Réecrire en Go 
+- GUI
+- Réecrire en Go 
 
 
